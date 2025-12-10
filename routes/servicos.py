@@ -4,9 +4,21 @@ import os
 import uuid
 from modulos.bd import connect_execute, connect_consulta
 from routes.cadastro import sanitizar_email
+from routes.auth import login_required, admin_required
+from PIL import Image
 
 servicos_bp = Blueprint('servicos', __name__)
 UPLOAD_FOLDER = "static/uploads/"
+
+
+def salvar_imagem_como_jpg(file, destino):
+    img = Image.open(file)
+
+    # Converte para RGB (evita erro com PNG/WEBP com transparência)
+    if img.mode in ("RGBA", "P"):
+        img = img.convert("RGB")
+
+    img.save(destino, "JPEG", quality=85)
 
 
 @servicos_bp.route('/servicos/cadastrar', methods=['GET'])
@@ -18,12 +30,14 @@ def pagina_cadastrar_servico():
 
 
 @servicos_bp.route('/servicos/cadastrar/ajax', methods=['POST'])
+@admin_required
 def cadastrar_servico():
     try:
         nome = request.form.get('nome')
         valor = request.form.get('valor')
         foto = request.files.get('foto')
         tempo = request.form.get('tempo')
+        estab = session['estabelecimento_id']
 
         if not nome or not valor:
             return jsonify({"status": "error", "message": "Preencha todos os campos obrigatórios!"}), 400
@@ -40,14 +54,14 @@ def cadastrar_servico():
         # salvar imagem
         filename = None
         if foto:
-            ext = foto.filename.split('.')[-1]
-            filename = f"{uuid.uuid4()}.{ext}"
-            foto.save(os.path.join(caminho_pasta, filename))
+            filename = f"{uuid.uuid4()}.jpg"
+            file = os.path.join(caminho_pasta, filename)
+            salvar_imagem_como_jpg(foto, file)
 
         # salvar no banco
-        sql_insert = '''INSERT INTO servicos_b (nome, valor, foto, tempo) VALUES (%s, %s, %s, %s)'''
+        sql_insert = '''INSERT INTO servicos_b (nome, valor, foto, tempo,estabelecimento_id) VALUES (%s, %s, %s, %s,%s)'''
         connect_execute(sql_insert, nome, float(valor),
-                        f'{email}/fotos_servicos/{filename}', tempo)
+                        f'{email}/fotos_servicos/{filename}', tempo, estab)
 
         return jsonify({"status": "success", "message": "Serviço cadastrado com sucesso!"})
 
@@ -56,6 +70,7 @@ def cadastrar_servico():
 
 
 @servicos_bp.route('/servicos/excluir/<int:id>', methods=['DELETE'])
+@admin_required
 def excluir_servico(id):
     try:
         # Buscar a foto antes de excluir
@@ -82,12 +97,14 @@ def excluir_servico(id):
 
 
 @servicos_bp.route('/servicos/editar/<int:id>', methods=['POST'])
+@admin_required
 def editar_servico(id):
     try:
         nome = request.form.get("nome")
         valor = request.form.get("valor")
         foto = request.files.get("foto")
         tempo = request.form.get("tempo")
+        estab = session['estabelecimento_id']
 
         if not nome or not valor:
             return jsonify({"status": "error", "message": "Preencha todos os campos obrigatórios!"})
@@ -109,10 +126,11 @@ def editar_servico(id):
 
         sql_update = """
             UPDATE servicos_b
-            SET nome=%s, valor=%s, foto=%s, tempo=%s
+            SET nome=%s, valor=%s, foto=%s, tempo=%s, estabelecimento_id=%s,
             WHERE id=%s
         """
-        connect_execute(sql_update, nome, float(valor), filename, tempo, id)
+        connect_execute(sql_update, nome, float(
+            valor), filename, tempo, estab, id)
 
         return jsonify({"status": "success", "message": "Serviço atualizado com sucesso!"})
 

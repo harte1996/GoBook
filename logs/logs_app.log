@@ -506,3 +506,184 @@
 2025-12-10 09:43:28,405 - INFO - 127.0.0.1 - - [10/Dec/2025 09:43:28] "GET /agenda HTTP/1.1" 200 -
 2025-12-10 09:43:28,441 - INFO - 127.0.0.1 - - [10/Dec/2025 09:43:28] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
 2025-12-10 09:43:28,665 - INFO - 127.0.0.1 - - [10/Dec/2025 09:43:28] "[35m[1mGET /agenda/eventos?profissional_id= HTTP/1.1[0m" 500 -
+2025-12-10 11:03:03,097 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.120:5000
+2025-12-10 11:03:03,098 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 11:03:03,101 - INFO -  * Restarting with stat
+2025-12-10 11:03:04,134 - WARNING -  * Debugger is active!
+2025-12-10 11:03:04,139 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 11:03:05,647 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:05] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:03:05,929 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:05] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:03:06,686 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:06] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:03:06,840 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:06] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:03:13,143 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:13] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 11:03:13,170 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:13] "GET / HTTP/1.1" 200 -
+2025-12-10 11:03:13,203 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:13] "[33mGET /static/img/logo-white.png HTTP/1.1[0m" 404 -
+2025-12-10 11:03:17,016 - ERROR - 127.0.0.1 - - [10/Dec/2025 11:03:17] code 400, message Bad request syntax ('\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03YÉÊB')
+2025-12-10 11:03:17,016 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:17] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03YÉÊB[0m" 400 -
+2025-12-10 11:03:17,022 - ERROR - 127.0.0.1 - - [10/Dec/2025 11:03:17] code 400, message Bad request version ('ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S')
+2025-12-10 11:03:17,023 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:17] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03î\x02uÏ÷\x14\x87\x8a±*ÒªJ:va\x83Ç\x9b¢\x90FÝn\x04A\x89~m2\x11Ñ ³\x08g¢\x1c³á\x1bLR\x99Æ\x8e.PP÷à8ô\x80üÏôÐH9\x8bøån¸\x00 ºº\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S[0m" 400 -
+2025-12-10 11:03:17,023 - ERROR - 127.0.0.1 - - [10/Dec/2025 11:03:17] code 400, message Bad request version ('**\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sjj\x00\x00DÍ\x00\x05\x00\x03\x02h2\x003\x04ï\x04í**\x00\x01\x00\x11ì\x04Àº')
+2025-12-10 11:03:17,023 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:17] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03xË\x1bÔ\x84$Øjo)Z\x859\x9c@¿Ç$AÄû\x86ù\x9cn\x8fµÑU\x19-\x87 F\x1cÖ\x9aÅêÈ\x04\x0eä@`\x94ÆÏ\x18\x11Ì\x85¦o\x10T÷T¶5½Kz2Q\x00 **\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sjj\x00\x00DÍ\x00\x05\x00\x03\x02h2\x003\x04ï\x04í**\x00\x01\x00\x11ì\x04Àº\x85[0m" 400 -
+2025-12-10 11:03:17,026 - ERROR - 127.0.0.1 - - [10/Dec/2025 11:03:17] code 400, message Bad request syntax ('\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03¢è')
+2025-12-10 11:03:17,026 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:17] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03¢è[0m" 400 -
+2025-12-10 11:03:21,580 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:21] "[32mGET / HTTP/1.1[0m" 302 -
+2025-12-10 11:03:21,595 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:21] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:03:21,844 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:21] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:03:27,923 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:27] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 11:03:27,937 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:27] "GET / HTTP/1.1" 200 -
+2025-12-10 11:03:28,026 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:28] "[33mGET /static/img/logo-white.png HTTP/1.1[0m" 404 -
+2025-12-10 11:03:58,104 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:58] "GET / HTTP/1.1" 200 -
+2025-12-10 11:03:58,136 - INFO - 127.0.0.1 - - [10/Dec/2025 11:03:58] "GET /static/img/logo-white.png HTTP/1.1" 200 -
+2025-12-10 11:04:38,871 - INFO -  * Detected change in 'c:\\Users\\guilherme.silva\\Desktop\\Formulário\\app.py', reloading
+2025-12-10 11:04:39,035 - INFO -  * Restarting with stat
+2025-12-10 11:04:40,685 - WARNING -  * Debugger is active!
+2025-12-10 11:04:40,691 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 11:04:43,178 - INFO - 127.0.0.1 - - [10/Dec/2025 11:04:43] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:04:43,333 - INFO - 127.0.0.1 - - [10/Dec/2025 11:04:43] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:05:34,380 - INFO -  * Detected change in 'c:\\Users\\guilherme.silva\\Desktop\\Formulário\\cadastro_usuarios.py', reloading
+2025-12-10 11:05:34,520 - INFO -  * Restarting with stat
+2025-12-10 11:05:35,521 - WARNING -  * Debugger is active!
+2025-12-10 11:05:35,525 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 11:05:38,073 - INFO - 127.0.0.1 - - [10/Dec/2025 11:05:38] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:05:38,325 - INFO - 127.0.0.1 - - [10/Dec/2025 11:05:38] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:05:55,865 - ERROR - Erro: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 13
+2025-12-10 11:06:28,804 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:06:28] code 400, message Bad request version ('\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01\x00-\x00\x02\x01\x01\x00')
+2025-12-10 11:06:28,804 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:28] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03Øu<vCÚö Ö\x11Ä£aÂ¢Oöò\x12\x1b\x9aÊ<\x8aTµU;\x0b"È) µKï\x01\x02tcÙ6)Í\x7fé|\x8b\x14ÚV\x0dZ\x14úk\x19m\x19U»\x19ÒðD\x00 êê\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sZZ\x00\x00\x00\x17\x00\x00\x00\x12\x00\x00\x00\x0d\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01\x00-\x00\x02\x01\x01\x00[0m" 400 -
+2025-12-10 11:06:28,848 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:06:28] code 400, message Bad request version ("\x05a\x0e¥\x81\x01n¼Ó!Ë¥ØÕ»Qà_1\x99<8Þ¾É³\x01}\x80ûùâÅ±¹/E'IëQW¿qK$\x84ò\x00\x17\x00\x00\x00\x12\x00\x00\x00")
+2025-12-10 11:06:28,849 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:28] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03xÓN\x05\x1d\x17\x1cÄ\x91\x04$JÈ\x18\x9e\x95Õ©;\x05\x95\x17\x9bÓ¹R<\x15c?\x95× Ö\x12\x9f\x8c"_\x00ÉË7\x82cÔ\x86\x81¥Ð\x98ô¸>©>g«+wÞ\x83ü\x91U\x00 êê\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sjj\x00\x00\x00\x0d\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01ÿ\x01\x00\x01\x00þ\x0d\x00ú\x00\x00\x01\x00\x01Û\x00 ¡º­_rU\x1f3A'®$çw3\x12Å%s!¹w]Òl8#\x8f³\x92\x7f.\x00ÐfÏ7#p]Ç\x95²D\x17Î/\x03¤ÖJ\x13\x8bRÐ\x07­¸\x19Æl$\x9bCoßTýýóÓ\x85\x89ùV\x0c¼\x98íe\x85á\x12ÛêC@¸g±Lg\x97\x99"]\\\x8bàù\x01\x08K\x00\x9aF6ÎÄJ \x16\x92ðÚ\x9aa¿kýùc\x8e©fpj\x98,£Çaï®Þ¹H<õg}fS\x97àOñÚ«5\x9dÃ\x89ã9\x09¯øZ6\x86°×-Î;\x89h¦È7õ¹¿ñÇ8ª\x9fJØ\x8aQú<)§9;\x02vd\x04\x0d\x05a\x0e¥\x81\x01n¼Ó!Ë¥ØÕ»Qà_1\x99<8Þ¾É³\x01}\x80ûùâÅ±¹/E'IëQW¿qK$\x84ò\x00\x17\x00\x00\x00\x12\x00\x00\x00[0m" 400 -
+2025-12-10 11:06:28,884 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:06:28] code 400, message Bad request version ('\x83u%fÚ6Íõä')
+2025-12-10 11:06:28,885 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:28] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03M\x0b¬\x92ÓJ¤%\x97\x8dypÅÃ¦"û\x8aqY\x0eØ\x85*:þÖÀÁÚ©í \x8eHÎ\x88\x09ël\x1c±ä_6gëÆþ£®néºyk4îE¹\x19TU5©\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x93êê\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00\x12\x00\x00ÿ\x01\x00\x01\x00\x00-\x00\x02\x01\x01\x00\x17\x00\x00\x00+\x00\x07\x06êê\x03\x04\x03\x03\x003\x04ï\x04í\x8a\x8a\x00\x01\x00\x11ì\x04À\x9e\x82ÉG\x11HÛ\x02\x7f\x88wX¾\x00c\x83hÌ@IÎÏñNM\x0c\x83u%fÚ6Íõä[0m" 400 -
+2025-12-10 11:06:28,923 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:06:28] code 400, message Bad request version ('{8Â')
+2025-12-10 11:06:28,923 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:28] "[31m[1m\x16\x03\x01\x06 \x01\x00\x06\x9c\x03\x03§Á=¡\x96p$¥1÷\x81\x1aR\x1e6Ô.²\x01\x86FñâÑÕ31ù0àHy ÷¸E\x8b²\x17¡³5(aip\x8b\x00r§Öøf\x06l&\x17\x90ÒÃ\x86Ñ\x89Yk\x00 ::\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x063\x8a\x8a\x00\x00\x003\x04ï\x04í\x1a\x1a\x00\x01\x00\x11ì\x04ÀKTh\x87Ú\x9e\x92F\x0d\x9fQdÎ\x01\x06­)\x8f×\x12\x0f\x8aÆ8dÑ=\x12ñ\x86\x086\x97Á\x15Bj\x02b,8n\x8a#/¯ô¤M\x8b-rC«9ç<eV\x8eHµ¢ýª¿Õ\x86"à¹\x85{8Â[0m" 400 -
+2025-12-10 11:06:59,200 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:59] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:06:59,285 - INFO - 179.241.17.82 - - [10/Dec/2025 11:06:59] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:05,371 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:05] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 11:07:05,509 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:05] "GET / HTTP/1.1" 200 -
+2025-12-10 11:07:05,591 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:05] "GET /static/img/logo-white.png HTTP/1.1" 200 -
+2025-12-10 11:07:07,480 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:07] "GET /cadastrar_profissional HTTP/1.1" 200 -
+2025-12-10 11:07:07,569 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:07] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:15,201 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:15] "GET /listar HTTP/1.1" 200 -
+2025-12-10 11:07:15,254 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:15] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:18,912 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:18] "GET /listar HTTP/1.1" 200 -
+2025-12-10 11:07:18,974 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:18] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:25,543 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:25] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:07:25,627 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:25] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:27,995 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:27] "GET / HTTP/1.1" 200 -
+2025-12-10 11:07:28,080 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:28] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:07:30,212 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:30] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:07:30,275 - INFO - 179.241.17.82 - - [10/Dec/2025 11:07:30] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:11:51,405 - INFO - 3.130.96.91 - - [10/Dec/2025 11:11:51] "[32mGET / HTTP/1.1[0m" 302 -
+2025-12-10 11:11:51,709 - INFO - 3.130.96.91 - - [10/Dec/2025 11:11:51] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:14:18,361 - INFO - 3.130.96.91 - - [10/Dec/2025 11:14:18] "[32mGET / HTTP/1.1[0m" 302 -
+2025-12-10 11:17:22,856 - ERROR - 3.130.96.91 - - [10/Dec/2025 11:17:22] code 400, message Bad request version ('À\x14À')
+2025-12-10 11:17:22,856 - INFO - 3.130.96.91 - - [10/Dec/2025 11:17:22] "[31m[1m\x16\x03\x01\x00{\x01\x00\x00w\x03\x03¬)<J\x85ï{c}AÜìptyý½tàÏI\x18\x81ß%à[ÍPÍóz\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+2025-12-10 11:19:34,419 - ERROR - 3.130.96.91 - - [10/Dec/2025 11:19:34] code 400, message Bad request syntax ('SSH-2.0-Go')
+2025-12-10 11:19:34,419 - INFO - 3.130.96.91 - - [10/Dec/2025 11:19:34] "[31m[1mSSH-2.0-Go[0m" 400 -
+2025-12-10 11:19:49,209 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:19:49] code 400, message Bad request version ('ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S')
+2025-12-10 11:19:49,209 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:49] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03*\x8f"z¾§\x0eäa)FhE·Hq=\x87p/^¯\x91\x9cÛüV¾dõ\x9f\x15 ¿»×9«\x90ïàÂ!\x9e8åõ\x7f¦A\x1e¨><u\x97¶B¶J\x96\x90Þq\x97\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S[0m" 400 -
+2025-12-10 11:19:49,265 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:19:49] code 400, message Bad request version ('\x8a\x8a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S')
+2025-12-10 11:19:49,265 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:49] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03*²µ§\x92g#ß\x8cO\x821FW\x06]\x18²1Û\x96Ú\x1cýÈMNÈbúîÊ Éùk½Õ8£ÛEå³0\x07\x93´ \x9bë\x9cRà:UL\x9d\x02Åô²ôb\x1d\x00 \x8a\x8a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06S[0m" 400 -
+2025-12-10 11:19:49,304 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:19:49] code 400, message Bad request version ('\x02h2\x08http/1.1\x00')
+2025-12-10 11:19:49,304 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:49] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03÷ \x09\x0d\x95¾\x84´ì\x13õá¾\x9bü\x1a\x9d\x95Õ\x86*m\x8d\x0d}+ÿY\x82¼t$ \x1a\x16\x99\x8eêR\x18¨!\x94¼J\x97\x11ìªgÅ>R\x9e^\x16#\x86üuAÞ\x86\x11l\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06Sªª\x00\x00\x00\x0b\x00\x02\x01\x00\x00#\x00\x00\x00\x1b\x00\x03\x02\x00\x02\x00\x05\x00\x05\x01\x00\x00\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00[0m" 400 -
+2025-12-10 11:19:49,349 - ERROR - 179.241.17.82 - - [10/Dec/2025 11:19:49] code 400, message Bad request version ('jÍ\x19l\x8e£©m\x96')
+2025-12-10 11:19:49,349 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:49] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03US\x18{Bº\x8bv\x84py\x11\x82E2g¨\x9a¦4\x19\x91Cß[\x8cÑ¿ÿ;æ\x12 \x02u)`\x8bÛwù\x94\x02øûâÁGþü3£'B³\x98½\x80ÃÝ1¿À²æ\x00 ªª\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x93ZZ\x00\x00\x00\x0b\x00\x02\x01\x00\x00+\x00\x07\x06ÊÊ\x03\x04\x03\x03\x00\x0d\x00\x12\x00\x10\x04\x03\x08\x04\x04\x01\x05\x03\x08\x05\x05\x01\x08\x06\x06\x01\x003\x04ï\x04í\x1a\x1a\x00\x01\x00\x11ì\x04Àt0cs)¯ÙúÃu#¾Aq¨2´1Ü\x8a¤Ïi/ÿ¸\x0e\x80syK ]«ä?¯z¹êh\x16qZ^õ\x184«²\x83µD\x9fä\x916À\x09jÍ\x19l\x8e£©m\x96[0m" 400 -
+2025-12-10 11:19:56,449 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:56] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:19:56,505 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:56] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:19:56,585 - INFO - 179.241.17.82 - - [10/Dec/2025 11:19:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-12-10 11:20:02,474 - INFO - 179.241.17.82 - - [10/Dec/2025 11:20:02] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 11:20:02,531 - INFO - 179.241.17.82 - - [10/Dec/2025 11:20:02] "GET / HTTP/1.1" 200 -
+2025-12-10 11:20:02,625 - INFO - 179.241.17.82 - - [10/Dec/2025 11:20:02] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:20:05,957 - INFO - 179.241.17.82 - - [10/Dec/2025 11:20:05] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:20:06,025 - INFO - 179.241.17.82 - - [10/Dec/2025 11:20:06] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:22:03,466 - INFO - 179.241.17.82 - - [10/Dec/2025 11:22:03] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:22:03,527 - INFO - 179.241.17.82 - - [10/Dec/2025 11:22:03] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:22:04,132 - ERROR - 3.130.96.91 - - [10/Dec/2025 11:22:04] code 400, message Bad request version ('À\x14À')
+2025-12-10 11:22:04,132 - INFO - 3.130.96.91 - - [10/Dec/2025 11:22:04] "[31m[1m\x16\x03\x01\x00{\x01\x00\x00w\x03\x03pi\x11}ê\x8aÐ\x05\x18 \x19nöè6o¥¶\x8c7^\x01}\x99|wW:\x88ñ)\x06\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À[0m" 400 -
+2025-12-10 11:22:20,587 - INFO - 179.241.17.82 - - [10/Dec/2025 11:22:20] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:22:20,646 - INFO - 179.241.17.82 - - [10/Dec/2025 11:22:20] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:22:34,966 - INFO - 179.241.17.82 - - [10/Dec/2025 11:22:34] "[35m[1mPOST /servicos/cadastrar/ajax HTTP/1.1[0m" 500 -
+2025-12-10 11:27:05,307 - ERROR - 87.251.67.33 - - [10/Dec/2025 11:27:05] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+2025-12-10 11:27:05,308 - INFO - 87.251.67.33 - - [10/Dec/2025 11:27:05] "[31m[1m\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr[0m" 400 -
+2025-12-10 11:36:10,666 - ERROR - 87.251.67.33 - - [10/Dec/2025 11:36:10] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+2025-12-10 11:36:10,666 - INFO - 87.251.67.33 - - [10/Dec/2025 11:36:10] "[31m[1m\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr[0m" 400 -
+2025-12-10 11:51:27,281 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.120:5000
+2025-12-10 11:51:27,282 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 11:51:27,284 - INFO -  * Restarting with stat
+2025-12-10 11:51:28,965 - WARNING -  * Debugger is active!
+2025-12-10 11:51:28,972 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 11:51:30,002 - INFO - 127.0.0.1 - - [10/Dec/2025 11:51:30] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:51:30,349 - INFO - 127.0.0.1 - - [10/Dec/2025 11:51:30] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:51:31,467 - INFO - 127.0.0.1 - - [10/Dec/2025 11:51:31] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:51:31,554 - INFO - 127.0.0.1 - - [10/Dec/2025 11:51:31] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:51:40,024 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:40] code 400, message Bad request version ('ò')
+2025-12-10 11:51:40,024 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:40] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03\x9c¤\x92)ÓC·\x09<î\x16ó\x1f\x14=*Ñ}\x95>Að\x11Ä\x0cö\x8b\x95H½lR ëcs\x05\x8cü­jÈ%H\x84)YÆî¬Ú;gªè\x1cò[0m" 400 -
+2025-12-10 11:51:40,028 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:40] code 400, message Bad request version ('\x14\x8alÎ¿\x18Ñíæ')
+2025-12-10 11:51:40,028 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:40] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03(\x96Âs?ªÓ\x83î®\x17\x05d\x12\x89MÿÜ^ª\x06¡Nqr [Á\x02¡\x0c´ \x14\x8alÎ¿\x18Ñíæ[0m" 400 -
+2025-12-10 11:51:40,104 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:40] code 400, message Bad request version ('Ä\x83\x97¯\x80=ö.ö,\x98Ï\x94ÞíªlNãÝØ¾mÓm\x837go\x97h\x88Ð©\x16I\x88ê¼\x84\x00\x94\x14')
+2025-12-10 11:51:40,105 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:40] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03\x12\x8a/\x9eÊ7\x08ð²ü|*S¤\x91õ¤I.(\x7fÂumü\x0euúÑàE® ìÐÆâcN\x8d7+ô\x12ÿdhÞ9;\x8c*\x12WbDö~\x85áoÎ\x1dR±\x00 zz\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x93\x1a\x1a\x00\x00\x00\x10\x00\x0e\x00\x0c\x02h2\x08http/1.1\x00+\x00\x07\x06ÊÊ\x03\x04\x03\x03ÿ\x01\x00\x01\x00þ\x0d\x01\x1a\x00\x00\x01\x00\x01\x01\x00 \x0d&þ0=W\x10\x8fG¢ë\x86\x16ÛcyÐE\x066ÅõáXtñGo\x9f¶ç~\x00ð<\x85\x04¼éÈë\x1eà\x95ÏG¨ïgÒ~\x00L mví\x06\x83òý\x90Ls\x87Ýv\x00ÐÒ3 å¶EZ5Hå/j\x1cÄ\x83\x97¯\x80=ö.ö,\x98Ï\x94ÞíªlNãÝØ¾mÓm\x837go\x97h\x88Ð©\x16I\x88ê¼\x84\x00\x94\x14[0m" 400 -
+2025-12-10 11:51:40,114 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:40] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03\x0f¡O¼Ç\x04Y\x19')
+2025-12-10 11:51:40,114 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:40] "[31m[1m\x16\x03\x01\x06À\x01\x00\x06¼\x03\x03\x0f¡O¼Ç\x04Y\x19\x093\x88a[0m" 400 -
+2025-12-10 11:51:43,354 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:43] code 400, message Bad request version ("ÇVï\x82^\x991³üe\x9f¨vp\x1aù\x18¥z\x82tcA?'_\x9ca`â7ÍDÜp³×À\x93áp÷\\¿¡Cu?¼S'ð\xadQ\x12g*A\x0efÙb\x82jd\x87awÑÜU\x905?À\x89¢&¬¹C+Ip´§å¡[<ù\x1a\x9f@t\x84ÔBîñ[s¸±½(¡F")
+2025-12-10 11:51:43,354 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:43] "[31m[1m\x16\x03\x01\x07\x00\x01\x00\x06ü\x03\x03]?Z8]kP»ê¨Gzæµï6%Ë·ÕO\x9eéðK'\x80ÇøÜ\x05Á \x1f\x15"\x0d\x9adÉU\x97î\x17ÃOã\x9fBß¾ÿmÄ¸æy&H\x97\x13b\x1a\x88Ç\x00 jj\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06\x93zz\x00\x00\x00+\x00\x07\x06jj\x03\x04\x03\x03\x00\x17\x00\x00\x00\x0b\x00\x02\x01\x00\x00-\x00\x02\x01\x01DÍ\x00\x05\x00\x03\x02h2\x003\x04ï\x04íjj\x00\x01\x00\x11ì\x04À'\x154«\x98¢_æ0(\x99IiðPñyCô@Ãiã¡\x09Ã\x97\x8202R{\x0cnüq@[$!\x19¨\x13G\x96\x131_\x99+\x9d¾Qj"ôÈ?¸oðÈLzs\x19R§¶¯\x84Ää\x8aH\x15\x06\x02 ÇVï\x82^\x991³üe\x9f¨vp\x1aù\x18¥z\x82tcA?'_\x9ca`â7ÍDÜp³×À\x93áp÷\\¿¡Cu?¼S'ð­Q\x12g*A\x0efÙb\x82jd\x87awÑÜU\x905?À\x89¢&¬¹C+Ip´§å¡[<ù\x1a\x9f@t\x84ÔBîñ[s¸±½(¡F[0m" 400 -
+2025-12-10 11:51:43,355 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:43] code 400, message Bad request version ('\x00\x02\x01\x00\x00\x17\x00\x00\x00+\x00\x07\x06ÚÚ\x03\x04\x03\x03\x00')
+2025-12-10 11:51:43,356 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:43] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03\x8d[([;Æ\x15¿²ó½õñêÉ­â¡£öµ\x19Rõ\x9b-EÇÞ×Áî Ä\x03\x07\x99\x05\x0f>ÃVã£!\x12àêz%\x00$t)¤ë\x91M\x1c\x06È\x97P®\x95\x00 \x8a\x8a\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06sêê\x00\x00ÿ\x01\x00\x01\x00\x00\x12\x00\x00\x00\x0b\x00\x02\x01\x00\x00\x17\x00\x00\x00+\x00\x07\x06ÚÚ\x03\x04\x03\x03\x00[0m" 400 -
+2025-12-10 11:51:43,828 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:43] code 400, message Bad request version ('\x87\x8dKà\x8e<ýÆÛk\x05ÐW\x99W(·ÁãUÚ#ÇØo³\x1b\x8bæb·')
+2025-12-10 11:51:43,829 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:43] "[31m[1m\x16\x03\x01\x06 \x01\x00\x06\x9c\x03\x03Ô½D/\x9d;!(DsCLqF%8ÆP0Ü<É\x19×F/£t\x07¶½[ \x87\x8dKà\x8e<ýÆÛk\x05ÐW\x99W(·ÁãUÚ#ÇØo³\x1b\x8bæb·[0m" 400 -
+2025-12-10 11:51:43,829 - ERROR - 177.57.18.148 - - [10/Dec/2025 11:51:43] code 400, message Bad request version ('ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06szz\x00\x00\x00')
+2025-12-10 11:51:43,829 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:43] "[31m[1m\x16\x03\x01\x06à\x01\x00\x06Ü\x03\x03\x84£þýû>\x966uë©\x8e.ø\x01b2«á\x9eÖ\x94±åSëm÷\x94ñCV \x1c#\x98Ø\x14/f ~[P.0q\x1e\x85\x19ÝËUÒ\x0bý\x8d+z\x8aÑ\x88¬<¯\x00 ÊÊ\x13\x01\x13\x02\x13\x03À+À/À,À0Ì©Ì¨À\x13À\x14\x00\x9c\x00\x9d\x00/\x005\x01\x00\x06szz\x00\x00\x00[0m" 400 -
+2025-12-10 11:51:57,741 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:57] "GET /login HTTP/1.1" 200 -
+2025-12-10 11:51:57,820 - INFO - 177.57.18.148 - - [10/Dec/2025 11:51:57] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 11:52:03,516 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:03] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 11:52:03,590 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:03] "GET / HTTP/1.1" 200 -
+2025-12-10 11:52:03,721 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:03] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:52:09,966 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:09] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:52:10,081 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:10] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:52:29,061 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:29] "POST /servicos/cadastrar/ajax HTTP/1.1" 200 -
+2025-12-10 11:52:29,986 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:29] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 11:52:30,070 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:30] "GET /static/uploads/guilherme_theodoro12_gmail_com/fotos_servicos/2fcc029c-d0cb-4cce-a145-d5c1357f96f0.jpg HTTP/1.1" 200 -
+2025-12-10 11:52:30,135 - INFO - 177.57.18.148 - - [10/Dec/2025 11:52:30] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 11:59:11,801 - INFO -  * Detected change in 'c:\\Users\\guilherme.silva\\Desktop\\Formulário\\routes\\servicos.py', reloading
+2025-12-10 11:59:12,022 - INFO -  * Restarting with stat
+2025-12-10 13:32:51,559 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.120:5000
+2025-12-10 13:32:51,559 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 13:32:51,562 - INFO -  * Restarting with stat
+2025-12-10 13:32:53,014 - WARNING -  * Debugger is active!
+2025-12-10 13:32:53,021 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 13:32:54,234 - INFO - 127.0.0.1 - - [10/Dec/2025 13:32:54] "GET /login HTTP/1.1" 200 -
+2025-12-10 13:32:54,470 - INFO - 127.0.0.1 - - [10/Dec/2025 13:32:54] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 13:32:55,533 - INFO - 127.0.0.1 - - [10/Dec/2025 13:32:55] "GET /login HTTP/1.1" 200 -
+2025-12-10 13:32:55,609 - INFO - 127.0.0.1 - - [10/Dec/2025 13:32:55] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:18,928 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:18] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 13:33:19,006 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:19] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:19,041 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:19] "[36mGET /static/uploads/guilherme_theodoro12_gmail_com/fotos_servicos/2fcc029c-d0cb-4cce-a145-d5c1357f96f0.jpg HTTP/1.1[0m" 304 -
+2025-12-10 13:33:21,240 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:21] "[32mGET / HTTP/1.1[0m" 302 -
+2025-12-10 13:33:21,335 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:21] "GET /login HTTP/1.1" 200 -
+2025-12-10 13:33:21,445 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:21] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:29,227 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:29] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 13:33:29,261 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:29] "GET /login HTTP/1.1" 200 -
+2025-12-10 13:33:29,352 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:29] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:34,955 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 13:33:35,065 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:35] "GET / HTTP/1.1" 200 -
+2025-12-10 13:33:35,136 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:35] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:39,775 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:39] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 13:33:39,857 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:39] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 13:33:39,886 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:39] "[36mGET /static/uploads/guilherme_theodoro12_gmail_com/fotos_servicos/2fcc029c-d0cb-4cce-a145-d5c1357f96f0.jpg HTTP/1.1[0m" 304 -
+2025-12-10 13:33:44,366 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:44] "DELETE /servicos/excluir/1 HTTP/1.1" 200 -
+2025-12-10 13:33:46,069 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:46] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 13:33:46,131 - INFO - 177.57.18.148 - - [10/Dec/2025 13:33:46] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 13:34:02,297 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:02] "POST /servicos/cadastrar/ajax HTTP/1.1" 200 -
+2025-12-10 13:34:03,216 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:03] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 13:34:03,301 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:03] "GET /static/uploads/guilherme_theodoro12_gmail_com/fotos_servicos/92694790-6cd3-43d0-a287-ce9a47bc3fdb.jpg HTTP/1.1" 200 -
+2025-12-10 13:34:03,340 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:03] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 13:34:26,017 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "DELETE /servicos/excluir/2 HTTP/1.1" 200 -
+2025-12-10 13:34:26,963 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "GET /servicos/cadastrar HTTP/1.1" 200 -
+2025-12-10 13:34:27,040 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:27] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -

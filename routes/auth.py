@@ -59,6 +59,7 @@ def login():
         session['user_id'] = user['id']
         session['username'] = user['nome']
         session['role'] = user['role']
+        session['estabelecimento_id'] = user['estabelecimento_id']
 
         flash('Login realizado com sucesso!', 'success')
         return redirect(url_for('home.home'))
