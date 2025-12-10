@@ -1,0 +1,248 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Cadastrar Serviços{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h3 class="mt-3 mb-4">Cadastrar Serviço</h3>
+
+    <div id="alert-area"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <form id="form-servico" enctype="multipart/form-data">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Nome do Serviço *</label>
+                        <input type="text" name="nome" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Valor Padrão (R$) *</label>
+                        <input type="number" name="valor" class="form-control" step="0.01" required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Foto</label>
+                        <input type="file" name="foto" class="form-control" accept="image/*" id="foto-input">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Tempo de Serviço (min) *</label>
+                        <input type="number" name="tempo" class="form-control" min="1" max="300" required>
+                    </div>
+
+                </div>
+
+                <div class="mt-3">
+                    <img id="preview-img" style="width:140px;height:140px;display:none;border-radius:12px;object-fit:cover;">
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Salvar Serviço</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <h4 class="mb-3">Serviços Cadastrados</h4>
+
+    <div class="row">
+        {% for serv in servicos %}
+        <div class="col-md-4">
+
+            <div class="card shadow-sm mb-4">
+                {% if serv.foto %}
+                <img src="{{ url_for('static', filename='uploads/' ~ serv.foto) }}" 
+                    class="card-img-top" 
+                    style="height:160px;object-fit:cover;">
+                {% else %}
+                <div class="bg-secondary d-flex justify-content-center align-items-center"
+                        style="height:160px;color:white;">
+                    Sem Foto
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ serv.nome }}</h5>
+                    <p class="card-text">Valor: R$ {{ "%.2f"|format(serv.valor) }}</p>
+                    <p class="card-text">Tempo: {{ serv.tempo }} min</p>
+
+                    <button class="btn btn-sm btn-outline-secondary btn-editar" 
+                        data-id="{{ serv.id }}"
+                        data-nome="{{ serv.nome }}"
+                        data-valor="{{ serv.valor }}"
+                        data-foto="{{ serv.foto }}"
+                        data-tempo="{{ serv.tempo }}">
+                        Editar
+                    </button>
+
+                    <button class="btn btn-sm btn-outline-danger btn-excluir" data-id="{{ serv.id }}">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- ================= MODAL DE EDIÇÃO ================== -->
+    <div class="modal fade" id="modalEditar" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Serviço</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="form-editar" enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="edit-id">
+
+                        <label class="form-label">Nome</label>
+                        <input type="text" id="edit-nome" name="nome" class="form-control">
+
+                        <label class="form-label mt-2">Valor (R$)</label>
+                        <input type="number" id="edit-valor" name="valor" class="form-control" step="0.01">
+
+                        <label class="form-label mt-2">Foto</label>
+                        <input type="file" id="edit-foto" name="foto" class="form-control">
+
+                        <label class="form-label mt-2">Tempo (min)</label>
+                        <input type="number" id="edit-tempo" name="tempo" class="form-control" min="1" max="300" required>
+
+                        <img id="edit-preview" class="mt-3" style="width:130px;height:130px;object-fit:cover;border-radius:12px;">
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="btn-salvar-edicao">Salvar Alterações</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ================= PREVIEW FOTO CADASTRO ==================
+    document.getElementById("foto-input").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const img = document.getElementById("preview-img");
+        img.src = URL.createObjectURL(file);
+        img.style.display = "block";
+    });
+
+
+    // ================= CADASTRAR ==================
+    document.getElementById("form-servico").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const form = document.getElementById("form-servico");
+        const formData = new FormData(form);
+
+        fetch("/servicos/cadastrar/ajax", {
+            method: "POST",
+            body: formData
+        })
+        .then(r => r.json())
+        .then(res => {
+            let alert = document.getElementById("alert-area");
+
+            if (res.status === "success") {
+                alert.innerHTML = `<div class="alert alert-success">${res.message}</div>`;
+                form.reset();
+                document.getElementById("preview-img").style.display = "none";
+
+                setTimeout(() => location.reload(), 800);
+            } else {
+                alert.innerHTML = `<div class="alert alert-danger">${res.message}</div>`;
+            }
+        })
+        .catch(err => {
+            document.getElementById("alert-area").innerHTML =
+                `<div class="alert alert-danger">Erro inesperado: ${err}</div>`;
+        });
+    });
+
+
+
+    // ================= ABRIR MODAL DE EDIÇÃO ==================
+    document.querySelectorAll(".btn-editar").forEach(btn => {
+        btn.addEventListener("click", () => {
+
+            let id = btn.dataset.id;
+            let nome = btn.dataset.nome;
+            let valor = btn.dataset.valor;
+            let foto = btn.dataset.foto;
+            let tempo = btn.dataset.tempo;
+
+            document.getElementById("edit-id").value = id;
+            document.getElementById("edit-nome").value = nome;
+            document.getElementById("edit-valor").value = valor;
+            document.getElementById("edit-tempo").value = tempo;
+
+            document.getElementById("edit-preview").src = foto 
+                ? "/static/uploads/" + foto
+                : "https://via.placeholder.com/130";
+
+            document.getElementById("edit-preview").style.display = "block";
+
+            new bootstrap.Modal(document.getElementById("modalEditar")).show();
+        });
+    });
+
+
+
+    // ================= SALVAR EDIÇÃO ==================
+    document.getElementById("btn-salvar-edicao").addEventListener("click", () => {
+        const form = document.getElementById("form-editar");
+        const formData = new FormData(form);
+        let id = document.getElementById("edit-id").value;
+
+        fetch(`/servicos/editar/${id}`, {
+            method: "POST",
+            body: formData
+        })
+        .then(r => r.json())
+        .then(res => {
+            alert(res.message);
+            if (res.status === "success") location.reload();
+        });
+    });
+
+
+
+    // ================= EXCLUIR ==================
+    document.querySelectorAll(".btn-excluir").forEach(btn => {
+        btn.addEventListener("click", () => {
+            let id = btn.dataset.id;
+
+            if (!confirm("Tem certeza que deseja excluir este serviço?")) return;
+
+            fetch(`/servicos/excluir/${id}`, {
+                method: "DELETE"
+            })
+            .then(r => r.json())
+            .then(res => {
+                alert(res.message);
+                if (res.status === "success") location.reload();
+            });
+        });
+    });
+</script>
+
+{% endblock %}

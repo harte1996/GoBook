@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error!!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+            text-align: center;
+        }
+        h1 {
+            color: #ff7700;
+            font-size: 3rem;
+            margin-bottom: 40px;
+        }
+        .btn-custom {
+            background-color: #ff7700;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            width: 250px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #cc6000;
+        }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pagina aberta deu erro: {{data}}</h1>
+        <div class="btn-container">
+            <a href="/" class="btn btn-custom">Voltar para Home</a>
+        </div>
+    </div>
+</body>
+</html>

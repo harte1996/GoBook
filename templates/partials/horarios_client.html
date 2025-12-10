@@ -1,0 +1,8 @@
+<div class="d-flex flex-wrap gap-2">
+{% for h in horarios %}
+    <div class="slot btn btn-outline-primary"
+         data-hora="{{ h }}">
+        {{ h }}
+    </div>
+{% endfor %}
+</div>

@@ -1,0 +1,139 @@
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
+from modulos.bd import connect_execute, connect_consulta
+from routes.agenda import agenda_disponivel
+from urllib.parse import quote
+from datetime import datetime, timedelta
+
+
+client_bp = Blueprint('cliente', __name__)
+
+
+@client_bp.route('/client')
+def client():
+    # Exemplo: substitua pelas suas consultas reais
+    barbeiros = connect_consulta(
+        'SELECT id, nome, foto FROM barbeiros_b', dictonary=True)
+    servicos = connect_consulta(
+        'SELECT id, nome, tempo, valor, foto FROM servicos_b', dictonary=True)
+    return render_template('cliente_agendar.html', barbeiros=barbeiros, servicos=servicos)
+
+
+@client_bp.route('/client/horarios')
+def client_horarios():
+    data = request.args.get('data')
+    barbeiro_id = request.args.get('barbeiro')
+    servico_id = request.args.get('servico')
+
+    data = datetime.strptime(data, '%Y-%m-%d')
+
+    # Agenda disponivel do profissional
+    agenda = agenda_disponivel(barbeiro_id, data)
+
+    # Consulta o servico para definir o tempo
+    service = connect_consulta('''
+    SELECT tempo
+    FROM servicos_b
+    WHERE id=%s                                              
+    ''', servico_id, dictonary=True)
+    tempo_service = service[0]['tempo']
+
+    hrs_disp = []
+
+    # Loop para definir os horários disponiveis
+    for a in agenda:
+
+        if a['evento'] != 'normal':
+            continue
+
+        inicio = (datetime.combine(a['data'], a['hora_inicio']))
+        fim = (datetime.combine(a['data'], a['hora_fim']))
+
+        # Define o formato de tempo
+        time_dif = fim - inicio
+        time_dif = (int(time_dif.seconds / 60))
+
+        if time_dif > tempo_service:
+            # quebrar_intervalo_services(inicio, fim, tempo_service)
+            time_atual = inicio
+            while time_atual < fim:
+                hrs_disp.append(time_atual.time().isoformat()[:8])
+                time_atual = time_atual + timedelta(minutes=tempo_service)
+
+    return render_template('partials/horarios_client.html', horarios=hrs_disp)
+
+
+@client_bp.route('/client/confirmar/', methods=['POST'])
+def client_confirmar():
+    nome = request.form['nome']
+    telefone = request.form['telefone']
+    barbeiro = request.form['barbeiro_nome']
+    barbeiro_id = request.form['barbeiro']
+    servico = request.form['servico_nome']
+    servico_id = request.form['servico']
+    data = request.form['data']
+    hora = request.form['horario']
+
+    # Transformar em datatime
+    data = datetime.strptime(data, '%Y-%m-%d')
+    hora = datetime.strptime(hora, '%H:%M:%S')
+
+    # Consulta o servico para definir o tempo
+    service = connect_consulta('''
+    SELECT tempo
+    FROM servicos_b
+    WHERE id=%s                                              
+    ''', servico_id, dictonary=True)
+    tempo_service = service[0]['tempo']
+
+    hora_fim = hora + timedelta(minutes=int(tempo_service))
+
+    agendar = connect_execute("""
+    INSERT INTO agendamentos
+    (barbeiro_id, cliente_nome, telefone, data, hora_inicio, hora_fim)
+    VALUES (%s, %s, %s, %s, %s, %s)
+    """,
+                    barbeiro_id,
+                    nome,
+                    telefone,
+                    data.date(),
+                    hora,
+                    hora_fim,
+                    )
+
+    if not agendar:
+        return render_template('error.html')
+
+    msg = f"""
+    Olá! Acabei de agendar meu horário ✅
+
+
+    📅 Data: {data.strftime('%d/%m/%Y')}
+    ⏰ Horário: {hora.time().isoformat()}
+    💈 Barbeiro: {barbeiro}
+    ✂️ Serviço: {servico}
+
+
+    Meu nome: {nome}
+    Telefone: {telefone}
+    """
+
+    link = 'https://wa.me/19982874653?text=' + quote(msg)
+
+    return jsonify({'redirect': link})
+
+
+@client_bp.route('/client/servicos/<int:barbeiro_id>')
+def servicos_por_barbeiro(barbeiro_id):
+    sql = """
+        SELECT 
+            s.id,
+            s.nome,
+            s.foto,
+            bs.preco
+        FROM barbeiro_servicos bs
+        JOIN servicos_b s ON s.id = bs.servico_id
+        WHERE bs.barbeiro_id = %s
+    """
+    servicos = connect_consulta(sql, barbeiro_id, dictonary=True)
+    return render_template('partials/_servicos_cards.html', servicos=servicos)
+

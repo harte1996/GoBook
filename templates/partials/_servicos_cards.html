@@ -1,0 +1,16 @@
+{% for s in servicos %}
+<div class="col-6 col-md-4 mb-3">
+    <div class="card card-select servico-card"
+         data-id="{{ s.id }}"
+         data-nome="{{ s.nome }}">
+         
+        <img src="{{ url_for('static', filename='uploads/' ~ s.foto) }}"
+             class="card-img-top img-card">
+
+        <div class="card-body text-center">
+            <strong>{{ s.nome }}</strong><br>
+            <small>R$ {{ '%.2f'|format(s.preco) }}</small>
+        </div>
+    </div>
+</div>
+{% endfor %}

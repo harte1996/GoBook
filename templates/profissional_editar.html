@@ -1,0 +1,152 @@
+{% extends "base_admin.html" %}
+{% block title %}Editar Profissional{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Editar Profissional</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" name="nome" class="form-control" value="{{ profissional.nome }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ profissional.email }}" required>
+    </div>
+
+    <!-- SERVIÇOS DO PROFISSIONAL -->
+    <div class="mb-4">
+        <label class="form-label">Serviços oferecidos</label>
+        <div class="row">
+
+            {% for serv in todos_servicos %}
+            <div class="col-md-6 mb-2">
+
+                <div class="border rounded p-2">
+
+                    <!-- Checkbox do serviço -->
+                    <div>
+                        <input type="checkbox"
+                               class="form-check-input me-1"
+                               name="servicos[]"
+                               value="{{ serv.id }}"
+                               {% if serv.id in servicos_do_profissional_ids %}checked{% endif %}>
+
+                        <label><strong>{{ serv.nome }}</strong></label>
+                    </div>
+
+                    <!-- Exibir preço caso o profissional atenda -->
+                    {% if serv.id in servicos_do_profissional_ids %}
+                        <div class="mt-2 ms-4">
+                            Preço atual:  
+                            <strong>R$ {{ "%.2f"|format(servicos_precos[serv.id]) }}</strong>
+
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-primary ms-2"
+                                    onclick="abrirModalPreco({{ profissional.id }}, {{ serv.id }}, '{{ serv.nome }}', '{{ servicos_precos[serv.id] }}')">
+                                Alterar preço
+                            </button>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Foto</label>
+        <input type="file" name="foto" class="form-control">
+    </div>
+
+    {% if profissional.foto %}
+    <img src="{{ url_for('static', filename='uploads/' ~ profissional.foto) }}"
+         width="150" class="img-thumbnail mb-3">
+    {% endif %}
+
+    <button class="btn btn-primary">Salvar Alterações</button>
+
+</form>
+
+
+<!-- MODAL PARA ALTERAR PREÇO -->
+<div class="modal fade" id="modalPreco" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Alterar preço do serviço</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formPreco">
+
+                    <input type="hidden" id="profissional_id">
+                    <input type="hidden" id="servico_id">
+
+                    <div class="mb-3">
+                        <label>Serviço</label>
+                        <input type="text" class="form-control" id="servico_nome" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Novo preço</label>
+                        <input type="number" step="0.01" class="form-control" id="preco" required>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" onclick="salvarPreco()">Salvar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+function abrirModalPreco(profissionalId, servicoId, nome, preco) {
+    document.getElementById("profissional_id").value = profissionalId;
+    document.getElementById("servico_id").value = servicoId;
+    document.getElementById("servico_nome").value = nome;
+    document.getElementById("preco").value = preco;
+
+    new bootstrap.Modal('#modalPreco').show();
+}
+
+function salvarPreco() {
+
+    const data = {
+        profissional_id: document.getElementById("profissional_id").value,
+        servico_id: document.getElementById("servico_id").value,
+        preco: document.getElementById("preco").value
+    };
+
+    fetch("/alterar_preco", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(resp => {
+        if (resp.status === "ok") {
+            location.reload();
+        } else {
+            alert("Erro ao salvar preço");
+        }
+    });
+}
+
+</script>
+
+{% endblock %}

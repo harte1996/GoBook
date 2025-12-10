@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Agendar Horário</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+.card-select {
+    cursor: pointer;
+    transition: .2s;
+    border: 2px solid transparent;
+}
+.card-select:hover {
+    transform: scale(1.02);
+}
+.card-select.active {
+    border-color: #198754;
+}
+.img-card {
+    height: 150px;
+    object-fit: cover;
+}
+.slot {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+.slot.active {
+    background: #198754;
+    color: #fff;
+    border-color: #198754;
+}
+</style>
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-4 mb-5">
+    <h4 class="text-center mb-4">Agende seu horário</h4>
+
+    <form id="form-agenda">
+
+        <!-- 👤 Dados -->
+        <input class="form-control mb-2" name="nome" placeholder="Seu nome" required>
+        <input class="form-control mb-4" name="telefone" placeholder="WhatsApp" required>
+
+        <!-- ✂️ Barbeiros -->
+        <h5>Escolha o profissional</h5>
+        <div class="row mb-4">
+            {% for b in barbeiros %}
+            <div class="col-6 col-md-4 mb-3">
+                <div class="card card-select barbeiro-card" data-id="{{ b.id }}" data-nome="{{ b.nome }}">
+                    <img src="{{ url_for('static', filename='uploads/' ~ b.foto) }}" class="card-img-top img-card">
+                    <div class="card-body text-center">
+                        <strong>{{ b.nome }}</strong>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 💼 Serviços -->
+
+        <h5>Escolha o serviço</h5>
+
+        <div id="servicos-loading" class="text-center text-muted mb-3" style="display:none">
+            Carregando serviços...
+        </div>
+
+        <div id="servicos-area" class="row mb-4"></div>
+
+        <!-- 📅 Data -->
+        <h5>Escolha a data</h5>
+        <input type="date" class="form-control mb-4" id="data" name="data" required>
+
+        <!-- ⏰ Horários -->
+        <h5>Horários disponíveis</h5>
+        <div id="horarios" class="row g-2 mb-4"></div>
+
+        <!-- Hidden -->
+        <input type="hidden" name="barbeiro" id="barbeiro">
+        <input type="hidden" name="servico" id="servico">
+        <input type="hidden" name="horario" id="horario">
+        <input type="hidden" name="barbeiro_nome" id="barbeiro_nome">
+        <input type="hidden" name="servico_nome" id="servico_nome">
+
+        <button class="btn btn-success w-100">Confirmar Agendamento</button>
+    </form>
+</div>
+
+
+<script>
+function carregarHorarios(){
+    if($('#barbeiro').val() && $('#servico').val() && $('#data').val()){
+        $.get('/client/horarios',{
+            barbeiro: $('#barbeiro').val(),
+            servico: $('#servico').val(),
+            data: $('#data').val()
+        }, function(res){
+            $('#horarios').html(res)
+        })
+    }
+}
+
+// 👉 Seleção do barbeiro
+$('.barbeiro-card').click(function(){
+
+    $('.barbeiro-card').removeClass('active')
+    $(this).addClass('active')
+
+    const barbeiroId   = $(this).data('id')
+    const barbeiroNome = $(this).data('nome')
+
+    $('#barbeiro').val(barbeiroId)
+    $('#barbeiro_nome').val(barbeiroNome)
+
+    // Reset
+    $('#servico').val('')
+    $('#horario').val('')
+    $('#horarios').html('')
+    $('#servicos-area').html('')
+    $('#servicos-loading').show()
+
+    // Buscar serviços do barbeiro
+    $.get(`/client/servicos/${barbeiroId}`, function(res){
+        $('#servicos-loading').hide()
+        $('#servicos-area').html(res)
+    })
+})
+
+// 👉 Seleção do serviço (delegado)
+$(document).on('click', '.servico-card', function(){
+    $('.servico-card').removeClass('active')
+    $(this).addClass('active')
+
+    $('#servico').val($(this).data('id'))
+    $('#servico_nome').val($(this).data('nome'))
+
+    $('#horario').val('')
+    $('#horarios').html('')
+
+    carregarHorarios()
+})
+
+// Data
+$('#data').change(carregarHorarios)
+
+// Horário
+$(document).on('click', '.slot', function(e){
+    e.preventDefault() // segurança extra
+
+    $('.slot').removeClass('active')
+    $(this).addClass('active')
+
+    const hora = $(this).data('hora')
+    $('#horario').val(hora)
+})
+
+// Submit
+$('#form-agenda').submit(function(e){
+    e.preventDefault()
+
+    if(!$('#horario').val()){
+        alert('Selecione um horário')
+        return
+    }
+
+    $.post('/client/confirmar/', $(this).serialize(), function(res){
+        window.location.href = res.redirect
+    })
+})
+</script>
+
+</body>
+</html>

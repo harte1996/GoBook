@@ -1,0 +1,120 @@
+{% extends "base_admin.html" %}
+
+{% block title %}GoBookService — Home{% endblock %}
+
+{% block content %}
+
+<style>
+    .home-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px 10px;
+    }
+
+    .home-header h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #1f1f1f;
+    }
+
+    .home-header p {
+        color: #555;
+        font-size: 1.1rem;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px 25px;
+        transition: .25s ease;
+        border: 1px solid #e5e5e5;
+        box-shadow: 0 3px 10px rgba(0,0,0,.08);
+        cursor: pointer;
+        height: 100%;
+    }
+
+    .action-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 6px 15px rgba(0,0,0,.15);
+    }
+
+    .action-card i {
+        font-size: 42px;
+        margin-bottom: 15px;
+        color: #198754;
+    }
+
+    .action-card h5 {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .action-card p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <div class="home-header">
+        <h1>GoBookService</h1>
+        <p>Gerencie profissionais, serviços e agendamentos com rapidez e eficiência.</p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Cadastrar Profissional -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <a href="{{ url_for('cadastro.cadastrar_profissional') }}" class="text-decoration-none text-dark">
+                <div class="action-card text-center">
+                    <i class="bi bi-person-plus"></i>
+                    <h5>Cadastrar Profissional</h5>
+                    <p>Adicione novos profissionais à plataforma.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Listar Profissionals -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <a href="{{ url_for('cadastro.listar_profissional') }}" class="text-decoration-none text-dark">
+                <div class="action-card text-center">
+                    <i class="bi bi-people"></i>
+                    <h5>Listar Profissional</h5>
+                    <p>Edite informações ou visualize todos os registrados.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Cadastrar Serviços -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}" class="text-decoration-none text-dark">
+                <div class="action-card text-center">
+                    <i class="bi bi-scissors"></i>
+                    <h5>Cadastrar Serviços</h5>
+                    <p>Gerencie cortes, barbas e outros serviços.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Agenda -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <a href="{{ url_for('agenda.agenda_profissional') }}" class="text-decoration-none text-dark">
+                <div class="action-card text-center">
+                    <i class="bi bi-calendar2-week"></i>
+                    <h5>Agenda</h5>
+                    <p>Configure horários, exceções e disponibilidade.</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Fácil adicionar novos cards futuramente 😉 -->
+
+    </div>
+
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+{% endblock %}

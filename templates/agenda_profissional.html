@@ -1,0 +1,433 @@
+{% extends "base_admin.html" %}
+{% block title %}Agenda do Profissional{% endblock %}
+{% block content %}
+
+
+<div class="container-fluid py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="mb-0">
+            <i class="bi bi-calendar-check me-2"></i>Gerenciar Agenda
+        </h2>
+
+        <div class="d-flex align-items-center bg-white p-2 rounded shadow-sm border">
+            <label class="fw-bold me-2 mb-0">Profissional:</label>
+            <select class="form-select form-select-sm border-0" id="profissionalSelect" onchange="trocarProfissional()"
+                style="min-width:200px">
+                {% for b in Profissional %}
+                <option value="{{ b.id }}">{{ b.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- CONFIG PADRÃO -->
+        <div class="col-lg-3">
+
+            <div class="card shadow-sm border-0">
+
+                <!-- HEADER CLICÁVEL -->
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center"
+                    role="button" data-bs-toggle="collapse" data-bs-target="#configAgenda">
+
+                    <strong>
+                        <i class="bi bi-gear-fill me-2"></i>Padrão Semanal
+                    </strong>
+                    <h1 class="text"> ➕  </h1>
+
+
+
+                    <i class="bi bi-chevron-down d-lg-none"></i>
+                </div>
+
+                <!-- COLLAPSE -->
+                <div id="configAgenda" class="collapse d-lg-block">
+
+                    <div class="card-body">
+
+                        <form id="formAgenda">
+
+                            <label class="small fw-bold">Dias de Atendimento</label>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                {% set dias_label = ['D','S','T','Q','Q','S','S'] %}
+                                {% set dias_value = [6,0,1,2,3,4,5] %}
+                                {% for i in range(7) %}
+                                <input type="checkbox" class="btn-check" id="dia{{ i }}" value="{{ dias_value[i] }}"
+                                    name="dias">
+                                <label for="dia{{ i }}" class="btn btn-outline-primary btn-sm rounded-circle"
+                                    style="width:36px;height:36px;">
+                                    {{ dias_label[i] }}
+                                </label>
+                                {% endfor %}
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="small fw-bold">Início</label>
+                                    <input type="time" class="form-control" name="hora_inicio" required>
+                                </div>
+                                <div class="col-6">
+                                    <label class="small fw-bold">Fim</label>
+                                    <input type="time" class="form-control" name="hora_fim" required>
+                                </div>
+                            </div>
+
+                            <label class="small fw-bold">Agenda aberta (dias)</label>
+                            <input type="number" class="form-control mb-3" name="dias_aberta" value="30">
+
+                            <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2"
+                                onclick="toggleExcecoes()">
+                                + Exceções recorrentes
+                            </button>
+
+                            <div id="excecoesContainer" class="d-none">
+                                <div id="listaExcecoes"></div>
+                                <button type="button" class="btn btn-outline-primary btn-sm w-100"
+                                    onclick="adicionarExcecao()">
+                                    + Nova exceção
+                                </button>
+                            </div>
+
+                            <button type="button" class="btn btn-dark w-100 mt-3" onclick="salvarAgenda()">
+                                Salvar Padrão
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CALENDÁRIO -->
+        <div class="col-lg-9">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-0" style="min-height:80vh">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EXCEÇÃO -->
+<div class="modal fade" id="modalExcecao" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header bg-warning-subtle">
+                <h5 class="modal-title">Editar Exceção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p>Data selecionada:
+                    <strong id="dataExcecaoDisplay"></strong>
+                </p>
+
+                <input type="hidden" id="dataExcecaoValue">
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="checkFechado"
+                        onchange="toggleHorariosExcecao()">
+                    <label class="form-check-label fw-bold">
+                        Dia Fechado
+                    </label>
+                </div>
+
+                <div id="horariosExcecao">
+                    <label class="fw-bold mb-2">Horário Especial</label>
+                    <div class="input-group">
+                        <input type="time" class="form-control" id="exHoraInicio">
+                        <span class="input-group-text">até</span>
+                        <input type="time" class="form-control" id="exHoraFim">
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <label class="fw-bold mb-2">Descrição</label>
+                    <input type="text" class="form-control" id="descricao" placeholder="Ex: Manutenção, Evento, etc.">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger me-auto" onclick="removerExcecao()">
+                    Restaurar Padrão
+                </button>
+                <button class="btn btn-primary" onclick="salvarExcecao()">
+                    Salvar Exceção
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<script>
+    let calendar;
+    let profissionalAtual;
+    let modalExcecao;
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        profissionalAtual = profissionalSelect.value;
+        modalExcecao = new bootstrap.Modal(document.getElementById("modalExcecao"));
+
+        calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+
+            locale: 'pt-br',
+            firstDay: 1,
+            nowIndicator: true,
+
+            initialView: window.innerWidth < 768 ? 'listWeek' : 'timeGridWeek',
+            height: '100%',
+            expandRows: true,
+
+            selectable: true,
+            allDaySlot: false,
+            slotMinTime: "07:00:00",
+            slotMaxTime: "22:00:00",
+
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,listWeek'
+            },
+
+            buttonText: {
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana',
+                list: 'Lista'
+            },
+
+            views: {
+                timeGridWeek: {
+                    // Formato mais conciso para mobile (apenas dia/mês)
+                    titleFormat: window.innerWidth < 768
+                        ? { month: 'short', day: 'numeric' }
+                        : { month: 'long', year: 'numeric' }
+                },
+                listWeek: {
+                    // Formato mais conciso para mobile (apenas dia/mês)
+                    titleFormat: window.innerWidth < 768
+                        ? { month: 'short', day: 'numeric' }
+                        : { month: 'long', year: 'numeric' }
+                },
+                dayGridMonth: {
+                    titleFormat: { month: 'long', year: 'numeric' }
+                }
+            },
+
+            slotLabelFormat: { hour: '2-digit', minute: '2-digit' },
+            eventTimeFormat: { hour: '2-digit', minute: '2-digit' },
+
+            eventDidMount: function (info) {
+                if (info.event.title) {
+                    new bootstrap.Tooltip(info.el, {
+                        title: info.event.title,
+                        placement: 'top',
+                        trigger: 'hover',
+                        container: 'body'
+                    });
+                }
+            },
+
+            dateClick(info) {
+                abrirModalExcecao(info.dateStr);
+            },
+
+            eventClick(info) {
+                info.jsEvent.preventDefault();
+                info.jsEvent.stopPropagation();
+                const data = info.event.startStr.split('T')[0];
+                abrirModalExcecao(data);
+            },
+
+            events: carregarEventos
+        });
+
+        calendar.render();
+    });
+
+    /* ==== Funções ==== */
+
+    function trocarProfissional() {
+        profissionalAtual = profissionalSelect.value;
+        calendar.removeAllEvents();
+        calendar.refetchEvents();
+    }
+
+    function carregarEventos(fetchInfo, success, failure) {
+        fetch(`/agenda/eventos?profissional_id=${profissionalAtual}`)
+            .then(r => r.json())
+            .then(success)
+            .catch(failure);
+    }
+
+    /* ==== Exceções ==== */
+
+    function abrirModalExcecao(dataStr) {
+        const d = dataStr.split('T')[0];
+        dataExcecaoValue.value = d;
+        dataExcecaoDisplay.innerText = d.split('-').reverse().join('/');
+        checkFechado.checked = false;
+        exHoraInicio.value = '';
+        exHoraFim.value = '';
+        descricao.value = '';
+        toggleHorariosExcecao();
+        modalExcecao.show();
+    }
+
+    function toggleHorariosExcecao() {
+        horariosExcecao.style.display = checkFechado.checked ? 'none' : 'block';
+    }
+
+    function salvarExcecao() {
+        fetch("/excecao", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                profissional_id: profissionalAtual,
+                data: dataExcecaoValue.value,
+                fechado: checkFechado.checked,
+                hora_inicio: exHoraInicio.value,
+                hora_fim: exHoraFim.value,
+                descricao: descricao.value
+            })
+        }).then(() => {
+            modalExcecao.hide();
+            calendar.refetchEvents();
+        });
+    }
+
+    function removerExcecao() {
+        if (!confirm("Remover exceção?")) return;
+        fetch("/excecao/remover", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                profissional_id: profissionalAtual,
+                data: dataExcecaoValue.value
+            })
+        }).then(() => {
+            modalExcecao.hide();
+            calendar.refetchEvents();
+        });
+    }
+
+    /* ==== Agenda ==== */
+
+    function toggleExcecoes() {
+        excecoesContainer.classList.toggle("d-none");
+    }
+
+    function adicionarExcecao() {
+        const container = document.getElementById("listaExcecoes");
+
+        const div = document.createElement("div");
+        div.className = "excecao-item border rounded p-3 mb-3 bg-light";
+
+        div.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong class="text-secondary">
+                ⏸ Horário recorrente (aplica-se a todos os dias)
+            </strong>
+            <button type="button"
+                    class="btn btn-outline-danger btn-sm"
+                    onclick="this.closest('.excecao-item').remove()">
+                Remover
+            </button>
+        </div>
+
+        <div class="row g-2">
+            <div class="col-6">
+                <label class="small fw-bold">Início</label>
+                <input type="time" class="form-control excecao-inicio" required>
+            </div>
+
+            <div class="col-6">
+                <label class="small fw-bold">Fim</label>
+                <input type="time" class="form-control excecao-fim" required>
+            </div>
+
+            <div class="col-12">
+                <label class="small fw-bold">Descrição</label>
+                <input type="text"
+                       class="form-control excecao-descricao"
+                       value="Almoço">
+            </div>
+        </div>
+    `;
+
+        container.appendChild(div);
+    }
+
+    function salvarAgenda() {
+
+        const form = document.getElementById("formAgenda");
+
+        const dias = [...document.querySelectorAll('input[name="dias"]:checked')]
+            .map(i => i.value);
+
+        if (dias.length === 0) {
+            alert("Selecione ao menos um dia");
+            return;
+        }
+
+        const excecoes = [...document.querySelectorAll('.excecao-item')].map(item => {
+            return {
+                hora_inicio: item.querySelector('.excecao-inicio').value,
+                hora_fim: item.querySelector('.excecao-fim').value,
+                descricao: item.querySelector('.excecao-descricao').value
+            };
+        });
+
+        fetch("/salvar-disponibilidade", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                profissional_id: profissionalAtual,
+                dias: dias,
+                hora_inicio: form.hora_inicio.value,
+                hora_fim: form.hora_fim.value,
+                dias_aberta: form.dias_aberta.value,
+                excecoes: excecoes
+            })
+        })
+            .then(() => {
+                calendar.refetchEvents();
+                alert("Agenda salva com sucesso!");
+            });
+    }
+</script>
+
+<style>
+    .fc-event-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    @media (max-width: 768px) {
+
+        .fc {
+            font-size: 14px;
+        }
+
+        .fc-toolbar-title {
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .fc-button {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+    }
+</style>
+
+{% endblock %}
