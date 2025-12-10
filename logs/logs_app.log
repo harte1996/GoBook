@@ -148,3 +148,13 @@
 2025-12-10 07:57:40,182 - INFO - 192.168.0.146 - - [10/Dec/2025 07:57:40] "GET /login HTTP/1.0" 200 -
 2025-12-10 07:57:53,214 - INFO - 192.168.0.146 - - [10/Dec/2025 07:57:53] "[32mPOST /login HTTP/1.0[0m" 302 -
 2025-12-10 07:57:53,236 - INFO - 192.168.0.146 - - [10/Dec/2025 07:57:53] "GET / HTTP/1.0" 200 -
+2025-12-10 08:57:39,014 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.120:5000
+2025-12-10 08:57:39,014 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 08:57:39,016 - INFO -  * Restarting with stat
+2025-12-10 08:57:40,008 - WARNING -  * Debugger is active!
+2025-12-10 08:57:40,013 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 08:57:41,757 - INFO - 127.0.0.1 - - [10/Dec/2025 08:57:41] "GET /login HTTP/1.1" 200 -
+2025-12-10 08:57:42,591 - INFO - 127.0.0.1 - - [10/Dec/2025 08:57:42] "GET /login HTTP/1.1" 200 -
