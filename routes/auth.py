@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from werkzeug.security import check_password_hash
 from modulos.tables import check_user
+from modulos.bd import connect_params
 from functools import wraps
 
 auth_bp = Blueprint('auth', __name__)
@@ -60,6 +61,8 @@ def login():
         session['username'] = user['nome']
         session['role'] = user['role']
         session['estabelecimento_id'] = user['estabelecimento_id']
+
+        connect_params(database=user['username'])
 
         flash('Login realizado com sucesso!', 'success')
         return redirect(url_for('home.home'))
