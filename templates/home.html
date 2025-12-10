@@ -5,68 +5,110 @@
 {% block content %}
 
 <style>
+
+    :root {
+        --gobook-primary: #0F224D;
+        --gobook-hover: #1A376E;
+        --gobook-light: #f4f6fa;
+    }
+
+    /* -- HEADER -- */
     .home-header {
         text-align: center;
         margin-bottom: 40px;
-        padding: 30px 10px;
+        padding: 40px 10px;
     }
 
     .home-header h1 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         font-weight: 700;
-        color: #1f1f1f;
+        color: var(--gobook-primary);
+        margin-bottom: 10px;
     }
 
     .home-header p {
-        color: #555;
-        font-size: 1.1rem;
+        color: #444;
+        font-size: 1.05rem;
+        max-width: 600px;
+        margin: 0 auto;
     }
 
+    /* -- CARDS -- */
     .action-card {
         background: white;
-        border-radius: 16px;
-        padding: 30px 25px;
+        border-radius: 18px;
+        padding: 32px 26px;
         transition: .25s ease;
-        border: 1px solid #e5e5e5;
-        box-shadow: 0 3px 10px rgba(0,0,0,.08);
+        border: 1px solid #e3e3e3;
+        box-shadow: 0 3px 10px rgba(0,0,0,.07);
         cursor: pointer;
         height: 100%;
     }
 
     .action-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 6px 15px rgba(0,0,0,.15);
+        box-shadow: 0 8px 18px rgba(0,0,0,.12);
+        border-color: var(--gobook-primary);
     }
 
     .action-card i {
-        font-size: 42px;
-        margin-bottom: 15px;
-        color: #198754;
+        font-size: 45px;
+        margin-bottom: 18px;
+        color: var(--gobook-primary);
+    }
+
+    .action-card:hover i {
+        color: var(--gobook-hover);
     }
 
     .action-card h5 {
         font-weight: 600;
         margin-bottom: 10px;
+        font-size: 1.15rem;
+        color: var(--gobook-primary);
     }
 
     .action-card p {
         color: #666;
         font-size: 0.95rem;
     }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 768px) {
+        .home-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .action-card {
+            padding: 28px 20px;
+        }
+
+        .action-card i {
+            font-size: 40px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .row.g-4 > div {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+    }
+
 </style>
 
 <div class="container-fluid">
 
     <div class="home-header">
-        <h1>GoBookService</h1>
+        <h1>Seja Bem-vindo!</h1>
         <p>Gerencie profissionais, serviços e agendamentos com rapidez e eficiência.</p>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
 
         <!-- Cadastrar Profissional -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <a href="{{ url_for('cadastro.cadastrar_profissional') }}" class="text-decoration-none text-dark">
+        <div class="col-12 col-sm-6 col-md-6 col-xl-3 d-flex">
+            <a href="{{ url_for('cadastro.cadastrar_profissional') }}" class="text-decoration-none text-dark w-100">
                 <div class="action-card text-center">
                     <i class="bi bi-person-plus"></i>
                     <h5>Cadastrar Profissional</h5>
@@ -75,9 +117,9 @@
             </a>
         </div>
 
-        <!-- Listar Profissionals -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <a href="{{ url_for('cadastro.listar_profissional') }}" class="text-decoration-none text-dark">
+        <!-- Listar Profissional -->
+        <div class="col-12 col-sm-6 col-md-6 col-xl-3 d-flex">
+            <a href="{{ url_for('cadastro.listar_profissional') }}" class="text-decoration-none text-dark w-100">
                 <div class="action-card text-center">
                     <i class="bi bi-people"></i>
                     <h5>Listar Profissional</h5>
@@ -87,8 +129,8 @@
         </div>
 
         <!-- Cadastrar Serviços -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}" class="text-decoration-none text-dark">
+        <div class="col-12 col-sm-6 col-md-6 col-xl-3 d-flex">
+            <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}" class="text-decoration-none text-dark w-100">
                 <div class="action-card text-center">
                     <i class="bi bi-scissors"></i>
                     <h5>Cadastrar Serviços</h5>
@@ -98,8 +140,8 @@
         </div>
 
         <!-- Agenda -->
-        <div class="col-12 col-md-6 col-xl-3">
-            <a href="{{ url_for('agenda.agenda_profissional') }}" class="text-decoration-none text-dark">
+        <div class="col-12 col-sm-6 col-md-6 col-xl-3 d-flex">
+            <a href="{{ url_for('agenda.agenda_profissional') }}" class="text-decoration-none text-dark w-100">
                 <div class="action-card text-center">
                     <i class="bi bi-calendar2-week"></i>
                     <h5>Agenda</h5>
@@ -107,8 +149,6 @@
                 </div>
             </a>
         </div>
-
-        <!-- Fácil adicionar novos cards futuramente 😉 -->
 
     </div>
 

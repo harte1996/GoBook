@@ -11,14 +11,41 @@
     >
 
     <style>
+        /* * Cores do Logo GoBook Service:
+         * Primária (Azul Marinho Escuro): #0F224D (aproximado)
+         * Secundária (Branco): #FFFFFF
+         */
+
+        .sidebar-logo {
+            width: 150px;
+            display: block;
+            margin: 0 auto 25px auto;
+        }
+
+        .sidebar-title {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #fff;
+            opacity: .9;
+        }
+
+        
+        :root {
+            --gobook-primary: #0F224D;
+            --gobook-hover: #1A376E; /* Um pouco mais claro para o efeito hover */
+        }
+
         body {
             background: #f7f7f7;
         }
 
         /* ===== SIDEBAR DESKTOP ===== */
         .sidebar {
+            /* Trocando o fundo escuro/preto para o azul marinho da marca */
             width: 260px;
-            background: #1f1f1f;
+            background: var(--gobook-primary); 
             height: 100vh;
             position: fixed;
             left: 0;
@@ -37,12 +64,20 @@
         }
 
         .sidebar a:hover {
-            background: #333;
+            /* Usando a cor de hover definida */
+            background: var(--gobook-hover);
+            color: white;
         }
 
         .content {
             margin-left: 260px;
             padding: 25px;
+        }
+
+        /* Trocando a cor do texto do titulo da sidebar */
+        .sidebar-title {
+            color: #ffffff; /* Ou #fff se preferir */
+            font-weight: bold;
         }
 
         /* ===== MOBILE ===== */
@@ -61,48 +96,55 @@
 </head>
 <body>
 
-<!-- ===== NAVBAR MOBILE ===== -->
-<nav class="navbar navbar-dark bg-dark d-lg-none">
+<nav class="navbar navbar-dark" style="background-color: var(--gobook-primary);">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="offcanvas"
                 data-bs-target="#menuAdmin">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <span class="navbar-brand">💈 Admin</span>
+        <span class="navbar-brand">
+            GoBook Service
+        </span>
     </div>
 </nav>
 
-<!-- ===== OFFCANVAS MOBILE ===== -->
-<div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="menuAdmin">
+<div class="offcanvas offcanvas-start text-white" 
+     style="background-color: var(--gobook-primary);" 
+     tabindex="-1" id="menuAdmin">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title">💈 Painel Administrativo</h5>
+        <h5 class="offcanvas-title">GoBook Service</h5>
         <button type="button" class="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"></button>
     </div>
 
     <div class="offcanvas-body p-0">
-        <a href="{{ url_for('cadastro.cadastrar_profissional') }}" class="d-block text-white px-4 py-3">Cadastrar Profissional</a>
-        <a href="{{ url_for('cadastro.listar_profissional') }}" class="d-block text-white px-4 py-3">Listar Profissional</a>
-        <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}" class="d-block text-white px-4 py-3">Cadastrar Serviços</a>
-        <a href="{{ url_for('agenda.agenda_profissional') }}" class="d-block text-white px-4 py-3">Agenda</a>
-        <a href="{{ url_for('auth.logout') }}" class="d-block text-danger px-4 py-3">Sair</a>
+        <a href="{{ url_for('home.home') }}" class="d-block text-white px-4 py-3"><i class="bi bi-house-door"></i> Home</a>
+        <a href="{{ url_for('cadastro.cadastrar_profissional') }}" class="d-block text-white px-4 py-3"><i class="bi bi-person-plus"></i> Cadastrar Profissional</a>
+        <a href="{{ url_for('cadastro.listar_profissional') }}" class="d-block text-white px-4 py-3"><i class="bi bi-people"></i> Listar Profissional</a>
+        <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}" class="d-block text-white px-4 py-3"><i class="bi bi-scissors"></i> Cadastrar Serviços</a>
+        <a href="{{ url_for('agenda.agenda_profissional') }}" class="d-block text-white px-4 py-3"><i class="bi bi-calendar-week"></i> Agenda</a>
+        <a href="{{ url_for('auth.logout') }}" class="d-block text-white px-4 py-3 text-danger"><i class="bi bi-box-arrow-right"></i> Sair</a>
     </div>
 </div>
 
-<!-- ===== SIDEBAR DESKTOP ===== -->
 <div class="sidebar d-none d-lg-block">
-    <h4 class="text-center mb-4">GoBook</h4>
+    
+    <img src="{{ url_for('static', filename='img/logo.png') }}" class="sidebar-logo">
 
-    <a href="{{ url_for('home.home') }}">Home</a>
-    <a href="{{ url_for('cadastro.cadastrar_profissional') }}">Cadastrar Profissional</a>
-    <a href="{{ url_for('cadastro.listar_profissional') }}">Listar Profissional</a>
-    <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}">Cadastrar Serviços</a>
-    <a href="{{ url_for('agenda.agenda_profissional') }}">Agenda</a>
-    <a href="{{ url_for('auth.logout') }}" class="text-danger">Sair</a>
+    <div class="sidebar-title">Painel Administrativo</div>
+
+    <a href="{{ url_for('home.home') }}"><i class="bi bi-house-door"></i> Home</a>
+    <a href="{{ url_for('cadastro.cadastrar_profissional') }}"><i class="bi bi-person-plus"></i> Cadastrar Profissional</a>
+    <a href="{{ url_for('cadastro.listar_profissional') }}"><i class="bi bi-people"></i> Listar Profissional</a>
+    <a href="{{ url_for('servicos.pagina_cadastrar_servico') }}"><i class="bi bi-scissors"></i> Cadastrar Serviços</a>
+    <a href="{{ url_for('agenda.agenda_profissional') }}"><i class="bi bi-calendar-week"></i> Agenda</a>
+
+    <hr>
+
+    <a href="{{ url_for('auth.logout') }}" class="text-danger"><i class="bi bi-box-arrow-right"></i> Sair</a>
 </div>
 
-<!-- ===== CONTEÚDO ===== -->
 <div class="content">
 
     {% with messages = get_flashed_messages(with_categories=true) %}

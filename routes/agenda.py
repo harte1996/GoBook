@@ -44,35 +44,7 @@ def quebrar_intervalo(dt_inicio, dt_fim, bloqueios, tipo):
     return slots
 
 
-def agenda_disponivel(profissional_id, date):
-
-    # =========================
-    # DADOS INICIAIS
-    # =========================
-
-    agenda_fixa = connect_consulta("""
-    SELECT dia_semana, hora_inicio, hora_fim
-    FROM disponibilidade_profissional
-    WHERE profissional_id=%s
-    """, profissional_id, dictonary=True)
-
-    excecoes = connect_consulta("""
-    SELECT data, hora_inicio, hora_fim, fechado, descricao
-    FROM agenda_excecao
-    WHERE profissional_id=%s
-    """, profissional_id, dictonary=True)
-
-    ocupados = connect_consulta("""
-    SELECT *
-    FROM agendamentos
-    WHERE profissional_id=%s
-    """, profissional_id, dictonary=True)
-
-    excecoes_recorrent = connect_consulta("""
-    SELECT  hora_inicio, hora_fim, descricao
-    FROM excecoes_recorrentes
-    WHERE profissional_id=%s
-    """, profissional_id, dictonary=True)
+def agenda_disponivel(date, agenda_fixa, excecoes, ocupados, excecoes_recorrent):
 
     # =========================
     # MAPAS
@@ -297,6 +269,30 @@ def eventos_agenda():
     WHERE profissional_id=%s
     """, profissional_id, dictonary=True)[0]
 
+    agenda_fixa = connect_consulta("""
+    SELECT dia_semana, hora_inicio, hora_fim
+    FROM disponibilidade_profissional
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    excecoes = connect_consulta("""
+    SELECT data, hora_inicio, hora_fim, fechado, descricao
+    FROM agenda_excecao
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    ocupados = connect_consulta("""
+    SELECT *
+    FROM agendamentos
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    excecoes_recorrent = connect_consulta("""
+    SELECT  hora_inicio, hora_fim, descricao
+    FROM excecoes_recorrentes
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
     dias_aberta = int(config['dias_aberta'])
 
     # =========================
@@ -310,7 +306,7 @@ def eventos_agenda():
 
     while data_atual < data_final:
 
-        agenda_dia.extend(agenda_disponivel(profissional_id, data_atual))
+        agenda_dia.extend(agenda_disponivel(data_atual, agenda_fixa, excecoes, ocupados, excecoes_recorrent))
         data_atual = data_atual + timedelta(days=1)
 
     eventos = []

@@ -28,6 +28,11 @@
             animation: fadeIn 0.4s ease;
         }
 
+        .logo-gobook {
+            width: 250px;
+            margin-bottom: 10px;
+        }
+
         .login-card h2 {
             font-weight: 700;
             color: #1f1f1f;
@@ -42,7 +47,7 @@
         }
 
         .btn-login {
-            background: #198754;
+            background: #0a1c43;  /* Azul da sua logo */
             color: #fff;
             border-radius: 10px;
             font-size: 1.1rem;
@@ -51,7 +56,7 @@
         }
 
         .btn-login:hover {
-            background: #146c43;
+            background: #07152f;
         }
 
         .form-label {
@@ -61,6 +66,10 @@
 
         .password-wrapper {
             position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
         }
 
         .toggle-password {
@@ -74,7 +83,7 @@
         }
 
         .toggle-password:hover {
-            color: #198754;
+            color: #0a1c43;
         }
 
         .forgot-password {
@@ -82,7 +91,7 @@
             margin-top: 10px;
             text-align: right;
             font-size: 0.9rem;
-            color: #198754;
+            color: #0a1c43;
             text-decoration: none;
         }
 
@@ -101,31 +110,36 @@
 
 <div class="login-card">
 
-    <h2>GoBookService</h2>
-    <p>Acesso administrativo</p>
+    <div class="text-center mb-3">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="GoBookService" class="logo-gobook">
+    </div>
+
+    <!-- <h2>GoBookService</h2> -->
+    <!-- <p>Acesso administrativo</p> -->
 
     <form method="POST" action="{{ url_for('auth.login') }}">
-        
+
         <div class="mb-3">
             <label for="username" class="form-label">Usuário, CPF ou E-mail</label>
             <input type="text" id="username" name="username" class="form-control" required>
         </div>
 
-        <div class="mb-3 password-wrapper">
+        <div class="mb-3">
             <label for="password" class="form-label">Senha</label>
-            <input type="password" id="password" name="password" class="form-control" required>
-            <i class="bi bi-eye toggle-password" onclick="togglePassword('password', this)"></i>
+
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password" class="form-control" required>
+                <i class="bi bi-eye toggle-password" id="toggleEye"></i>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-login w-100">Entrar</button>
 
-        <!-- Esqueceu senha -->
         <a href="{{ url_for('auth.esqueci_senha') }}" class="forgot-password">
             Esqueceu a senha?
         </a>
     </form>
 
-    <!-- Mensagens Flash -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
@@ -137,14 +151,29 @@
 </div>
 
 <script>
-function togglePassword(id, icon) {
-    const input = document.getElementById(id);
-    const isPassword = input.type === "password";
+const passwordInput = document.getElementById("password");
+const toggleIcon = document.getElementById("toggleEye");
 
-    input.type = isPassword ? "text" : "password";
-    icon.classList.toggle("bi-eye");
-    icon.classList.toggle("bi-eye-slash");
-}
+// Mostrar senha enquanto pressiona
+toggleIcon.addEventListener("mousedown", () => {
+    passwordInput.type = "text";
+    toggleIcon.classList.remove("bi-eye");
+    toggleIcon.classList.add("bi-eye-slash");
+});
+
+// Voltar para senha quando soltar
+toggleIcon.addEventListener("mouseup", () => {
+    passwordInput.type = "password";
+    toggleIcon.classList.add("bi-eye");
+    toggleIcon.classList.remove("bi-eye-slash");
+});
+
+// Caso arraste para fora mantendo pressionado
+toggleIcon.addEventListener("mouseleave", () => {
+    passwordInput.type = "password";
+    toggleIcon.classList.add("bi-eye");
+    toggleIcon.classList.remove("bi-eye-slash");
+});
 </script>
 
 </body>

@@ -7,25 +7,25 @@ import pandas as pd
 
 global paramts_connect
 
-def connect_params(**kwargs):
-    return dict(
-        host='172.18.150.36',
-        port=3306,
-        user='invent',
-        passwd='Invent@4321',
-        database='inventario',
-    )
-
 # def connect_params(**kwargs):
-#     paramts_connect =  dict(
-#         host='192.168.0.123',
+#     return dict(
+#         host='172.18.150.36',
 #         port=3306,
-#         user='Guilherme',
-#         passwd='Crhono12#',
-#         database='GoBook',
+#         user='invent',
+#         passwd='Invent@4321',
+#         database='inventario',
 #     )
+
+def connect_params(**kwargs):
+    paramts_connect =  dict(
+        host='192.168.0.123',
+        port=3306,
+        user='Guilherme',
+        passwd='Crhono12#',
+        database='GoBook',
+    )
     
-    # paramts_connect.update(kwargs)
+    paramts_connect.update(kwargs)
 
     return paramts_connect
 
