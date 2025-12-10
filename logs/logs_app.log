@@ -687,3 +687,24 @@
 2025-12-10 13:34:26,017 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "DELETE /servicos/excluir/2 HTTP/1.1" 200 -
 2025-12-10 13:34:26,963 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "GET /servicos/cadastrar HTTP/1.1" 200 -
 2025-12-10 13:34:27,040 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:27] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 14:02:42,980 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.151:5000
+2025-12-10 14:02:42,981 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 14:02:42,982 - INFO -  * Restarting with stat
+2025-12-10 14:02:43,874 - WARNING -  * Debugger is active!
+2025-12-10 14:02:43,877 - INFO -  * Debugger PIN: 299-725-745
+2025-12-10 14:04:29,705 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:29] "[32mGET /cadastrar_profissional HTTP/1.0[0m" 302 -
+2025-12-10 14:04:29,719 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:29] "[32mGET /?is_admin=False HTTP/1.0[0m" 302 -
+2025-12-10 14:04:29,760 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:29] "GET /login HTTP/1.0" 200 -
+2025-12-10 14:04:29,866 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:29] "[36mGET /static/img/logo.png HTTP/1.0[0m" 304 -
+2025-12-10 14:04:37,620 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:37] "[32mPOST /login HTTP/1.0[0m" 302 -
+2025-12-10 14:04:37,643 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:37] "GET / HTTP/1.0" 200 -
+2025-12-10 14:04:37,695 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:37] "GET /static/img/logo-white.png HTTP/1.0" 200 -
+2025-12-10 14:04:44,849 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:44] "GET /cadastrar_profissional HTTP/1.0" 200 -
+2025-12-10 14:04:44,929 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:44] "[36mGET /static/img/logo-white.png HTTP/1.0[0m" 304 -
+2025-12-10 14:04:51,843 - ERROR - Erro: Table 'gobook.profissional_b' doesn't exist
+2025-12-10 14:04:51,847 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:51] "[32mPOST /cadastrar_profissional HTTP/1.0[0m" 302 -
+2025-12-10 14:04:51,919 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:51] "GET /cadastrar_profissional HTTP/1.0" 200 -
+2025-12-10 14:04:51,958 - INFO - 192.168.0.146 - - [10/Dec/2025 14:04:51] "[36mGET /static/img/logo-white.png HTTP/1.0[0m" 304 -
