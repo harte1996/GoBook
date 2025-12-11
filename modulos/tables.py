@@ -70,8 +70,8 @@ def table_user():
             criado_por INT NOT NULL,
             ativo TINYINT DEFAULT 1,
             estabelecimento_id INT NOT NULL,
-            FOREIGN KEY (criado_por) REFERENCES usuarios_b(id),
-            FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos_b(id) ON DELETE CASCADE
+            FOREIGN KEY (criado_por) REFERENCES gobook.usuarios_b(id),
+            FOREIGN KEY (estabelecimento_id) REFERENCES gobook.estabelecimentos_b(id) ON DELETE CASCADE
         );'''
 
     connect_execute(sql_profissional)
@@ -85,7 +85,7 @@ def table_user():
             tempo SMALLINT NOT NULL, -- Alterado para SMALLINT
             foto VARCHAR(255),
             estabelecimento_id INT NOT NULL,
-            FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos_b(id) ON DELETE CASCADE
+            FOREIGN KEY (estabelecimento_id) REFERENCES gobook.estabelecimentos_b(id) ON DELETE CASCADE
         );'''
     connect_execute(sql_servico)
 

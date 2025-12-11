@@ -15,7 +15,7 @@ sql = '''INSERT INTO estabelecimentos_b (nome, endereco, telefone, ativo)
          VALUES (%s, %s, %s, %s);
        '''
 
-estab = connect_execute(sql, nome, endereco, tele, ativo)
+# estab = connect_execute(sql, nome, endereco, tele, ativo)
 
 
 # Cadastro Usuário
@@ -28,16 +28,17 @@ role = 'Master'
 telefone = '19982874653'
 data_cadastrado = datetime.now()
 ativo = True
-estab_id = estab
+# estab_id = estab
 
 sql = '''INSERT INTO usuarios_b (nome, username, email, cpf, senha, role, telefone, data_cadastro, estabelecimento_id, ativo)
          VALUES ( %s, %s, %s, %s, %s,%s, %s, %s, %s, %s);
     '''
-connect_execute(sql, nome, username, email, cpf, senha,
-                role, telefone, data_cadastrado, estab_id, ativo)
+# connect_execute(sql, nome, username, email, cpf, senha,
+#                role, telefone, data_cadastrado, estab_id, ativo)
 
 
-creat_database(username)
+creat_database(username.lower())
+print(listar_database())
 connect_params(database=username)
 table_user()
 
