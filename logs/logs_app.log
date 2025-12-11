@@ -687,3 +687,25 @@
 2025-12-10 13:34:26,017 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "DELETE /servicos/excluir/2 HTTP/1.1" 200 -
 2025-12-10 13:34:26,963 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:26] "GET /servicos/cadastrar HTTP/1.1" 200 -
 2025-12-10 13:34:27,040 - INFO - 177.57.18.148 - - [10/Dec/2025 13:34:27] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 14:32:01,130 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.18.0.120:5000
+2025-12-10 14:32:01,130 - INFO - [33mPress CTRL+C to quit[0m
+2025-12-10 14:32:01,133 - INFO -  * Restarting with stat
+2025-12-10 14:32:02,203 - WARNING -  * Debugger is active!
+2025-12-10 14:32:02,210 - INFO -  * Debugger PIN: 374-668-492
+2025-12-10 14:32:03,781 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:03] "GET /login HTTP/1.1" 200 -
+2025-12-10 14:32:04,086 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:04] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 14:32:06,199 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:06] "GET /login HTTP/1.1" 200 -
+2025-12-10 14:32:06,274 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:06] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-12-10 14:32:12,065 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:12] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-12-10 14:32:12,090 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:12] "GET / HTTP/1.1" 200 -
+2025-12-10 14:32:12,126 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:12] "GET /static/img/logo-white.png HTTP/1.1" 200 -
+2025-12-10 14:32:19,259 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:19] "GET /cadastrar_profissional HTTP/1.1" 200 -
+2025-12-10 14:32:19,304 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:19] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 14:32:28,188 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:28] "[32mPOST /cadastrar_profissional HTTP/1.1[0m" 302 -
+2025-12-10 14:32:28,223 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:28] "GET /cadastrar_profissional HTTP/1.1" 200 -
+2025-12-10 14:32:28,263 - INFO - 127.0.0.1 - - [10/Dec/2025 14:32:28] "[36mGET /static/img/logo-white.png HTTP/1.1[0m" 304 -
+2025-12-10 14:34:37,930 - INFO -  * Detected change in 'c:\\Users\\guilherme.silva\\Desktop\\Formulário\\modulos\\bd.py', reloading
+2025-12-10 14:34:38,099 - INFO -  * Restarting with stat
