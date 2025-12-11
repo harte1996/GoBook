@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, flash
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash, g
 from werkzeug.security import check_password_hash
 from modulos.tables import check_user
-from modulos.bd import connect_params
 from functools import wraps
 
 auth_bp = Blueprint('auth', __name__)
@@ -13,6 +12,15 @@ def admin_required(f):
         if 'role' not in session or not session['role'] in ['Admin', 'Master']:
             flash('Acesso negado: você precisa ser um administrador.', 'error')
             return redirect(url_for('home.home', is_admin=True if session.get('role') == 'Admin' else False))
+
+        g.db_params = {
+            'host': '192.168.0.211',
+            'port': 3306,
+            'user': 'Guilherme',
+            'passwd': 'Crhono12#',
+            'database': session.get('db_schema')  # <-- importante
+        }
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -23,6 +31,15 @@ def master_required(f):
         if 'role' not in session or session['role'] != 'Master':
             flash('Acesso negado: você precisa ser Master.', 'error')
             return redirect(url_for('home.home', is_admin=True if session.get('role') == 'Admin' else False))
+
+        g.db_params = {
+            'host': '192.168.0.211',
+            'port': 3306,
+            'user': 'Guilherme',
+            'passwd': 'Crhono12#',
+            'database': session.get('db_schema')  # <-- importante
+        }
+
         return f(*args, **kwargs)
     return decorated_function
 
@@ -33,6 +50,15 @@ def login_required(f):
         if 'username' not in session:
             flash('Você precisa realizar o login.', 'warning')
             return redirect(url_for('auth.login'))
+
+        g.db_params = {
+            'host': '192.168.0.211',
+            'port': 3306,
+            'user': 'Guilherme',
+            'passwd': 'Crhono12#',
+            'database': session.get('db_schema')  # <-- importante
+        }
+
         return f(*args, **kwargs)
     return wrapper
 
@@ -61,8 +87,7 @@ def login():
         session['username'] = user['nome']
         session['role'] = user['role']
         session['estabelecimento_id'] = user['estabelecimento_id']
-
-        connect_params(database=user['username'])
+        session['db_schema'] = user['username']
 
         flash('Login realizado com sucesso!', 'success')
         return redirect(url_for('home.home'))
@@ -76,6 +101,7 @@ def logout():
     session.clear()
     flash('Logout realizado com sucesso!', 'info')
     return redirect(url_for('auth.login'))
+
 
 @auth_bp.route('/esqueci-senha', methods=['GET', 'POST'])
 def esqueci_senha():

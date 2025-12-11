@@ -1,17 +1,19 @@
 from mysql.connector import connect, ProgrammingError
+from flask import g
 from modulos import logger
 from contextlib import contextmanager
 from sqlalchemy import create_engine
 from modulos.logger_config import logging
 import pandas as pd
 
-paramts_connect = None
 
 def connect_params(**kwargs):
-    global paramts_connect
 
     # Se ainda não existe, cria a configuração padrão
-    if paramts_connect is None:
+    if hasattr(g, "db_params"):
+        paramts_connect = g.db_params
+
+    else:
         paramts_connect = dict(
             host='192.168.0.211',
             port=3306,
@@ -151,7 +153,6 @@ def listar_database():
         except ProgrammingError as e:
             print(f'erro: {e.msg}')
 
-paramts_connect = connect_params()
 
 def creat_database(name):
     # valida nome do banco para evitar SQL injection
