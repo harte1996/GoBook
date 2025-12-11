@@ -5,22 +5,26 @@ from sqlalchemy import create_engine
 from modulos.logger_config import logging
 import pandas as pd
 
-global paramts_connect
+paramts_connect = None
 
 def connect_params(**kwargs):
+    global paramts_connect
 
-    if not 'paramts_connect' in locals():
-        paramts_connect =  dict(
-            host='192.168.0.123',
+    # Se ainda não existe, cria a configuração padrão
+    if paramts_connect is None:
+        paramts_connect = dict(
+            host='192.168.0.211',
             port=3306,
             user='Guilherme',
             passwd='Crhono12#',
             database='GoBook',
         )
-    
+
+    # Atualiza apenas o que o usuário mandar
     paramts_connect.update(kwargs)
 
     return paramts_connect
+
 
 @contextmanager
 def new_connect():
@@ -149,9 +153,10 @@ def listar_database():
 
 paramts_connect = connect_params()
 
-
-
 def creat_database(name):
-    connect_params()
-    database = 'CREATE DATABASE IF NOT EXISTS %s'
-    connect_execute(database,name)
+    # valida nome do banco para evitar SQL injection
+    if not name.isidentifier():
+        raise ValueError("Nome de database inválido.")
+
+    sql = f"CREATE DATABASE IF NOT EXISTS `{name}`"
+    connect_execute(sql)
