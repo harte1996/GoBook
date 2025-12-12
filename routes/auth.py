@@ -13,13 +13,7 @@ def admin_required(f):
             flash('Acesso negado: você precisa ser um administrador.', 'error')
             return redirect(url_for('home.home', is_admin=True if session.get('role') == 'Admin' else False))
 
-        g.db_params = {
-            'host': '192.168.0.211',
-            'port': 3306,
-            'user': 'Guilherme',
-            'passwd': 'Crhono12#',
-            'database': session.get('db_schema')  # <-- importante
-        }
+        g.db_params =  session.get('db_schema')  
 
         return f(*args, **kwargs)
     return decorated_function
@@ -32,13 +26,7 @@ def master_required(f):
             flash('Acesso negado: você precisa ser Master.', 'error')
             return redirect(url_for('home.home', is_admin=True if session.get('role') == 'Admin' else False))
 
-        g.db_params = {
-            'host': '192.168.0.211',
-            'port': 3306,
-            'user': 'Guilherme',
-            'passwd': 'Crhono12#',
-            'database': session.get('db_schema')  # <-- importante
-        }
+        g.db_params =  session.get('db_schema') 
 
         return f(*args, **kwargs)
     return decorated_function
@@ -51,13 +39,7 @@ def login_required(f):
             flash('Você precisa realizar o login.', 'warning')
             return redirect(url_for('auth.login'))
 
-        g.db_params = {
-            'host': '192.168.0.211',
-            'port': 3306,
-            'user': 'Guilherme',
-            'passwd': 'Crhono12#',
-            'database': session.get('db_schema')  # <-- importante
-        }
+        g.db_params =  session.get('db_schema') 
 
         return f(*args, **kwargs)
     return wrapper

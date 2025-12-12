@@ -4,27 +4,32 @@ from modulos import logger
 from contextlib import contextmanager
 from sqlalchemy import create_engine
 from modulos.logger_config import logging
+import os
+from dotenv import load_dotenv
 import pandas as pd
 
 
 def connect_params(**kwargs):
 
+    # Carrega as variáveis do arquivo .env
+    load_dotenv()
+
+    # Acessa as variáveis de ambiente
+    paramts_connect = dict(
+    host=os.getenv("DB_IP"),
+    port=int(os.getenv("DB_PORT")),
+    user=os.getenv("DB_USER"),
+    passwd=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_PADRAO"))
+
     # Se ainda não existe, cria a configuração padrão
     if hasattr(g, "db_params"):
-        paramts_connect = g.db_params
-
-    else:
-        paramts_connect = dict(
-            host='192.168.0.211',
-            port=3306,
-            user='Guilherme',
-            passwd='Crhono12#',
-            database='GoBook',
-        )
+        paramts_connect.update({'database' : g.db_params})
 
     # Atualiza apenas o que o usuário mandar
     paramts_connect.update(kwargs)
 
+    print(paramts_connect)
     return paramts_connect
 
 
@@ -98,6 +103,9 @@ def atualizar_table(df, table, if_exists='append', edit='yes'):
     from sqlalchemy.orm import sessionmaker
 
     try:
+
+        paramts_connect = connect_params()
+
         # Gerando Engine
         url = f"mysql+mysqlconnector://{paramts_connect['user']}:{paramts_connect['passwd'].replace('@','%40')}@{paramts_connect['host']}/{paramts_connect['database']}"
         connect = create_engine(url)
