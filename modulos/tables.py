@@ -41,6 +41,7 @@ def table_geral():
         data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         estabelecimento_id INT, 
         ativo TINYINT DEFAULT 1,
+        try_test TINYINT DEFAULT 1,
         FOREIGN KEY (estabelecimento_id) REFERENCES estabelecimentos_b(id) ON DELETE SET NULL
     );'''
 
