@@ -7,38 +7,57 @@
 <!-- CropperJS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<!-- Se já existir no base_admin.html, pode remover -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
 
 <style>
-    /* Aumenta a área disponível no modal */
-    .modal-body {
-        display: block;
-        max-width: 100%;
-        width: 250px;
+    /* Modal grande */
+    #cropModal .modal-dialog {
+        max-width: 90vw;
     }
 
-    .modal-content {
+    #cropModal .modal-content {
         height: 90vh;
     }
 
-    .crop-image {
-        width: 600px !important;
-        height: 600px !important;
-        object-fit:cover !important;
+    #cropModal .modal-body {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #crop-image {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
     }
 
     .cropper-container {
         width: 100% !important;
         height: 100% !important;
     }
-    
-    .centered-and-cropped { object-fit: cover }
 
+    .preview-wrapper {
+    margin-top: 50px;
+    width: 180px;
+    height: 240px; /* proporção 3:4 */
+    border-radius: 12px;
+    border: 2px dashed #ced4da;
+    overflow: hidden;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
 
-     /* Remove o fundo quadriculado
-    .cropper-bg {
-        background-image: none !important;
-        background-color: #000 !important;
-    } */
+    #preview-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .btn {
+        margin-top: 50px;
+    }
 
 </style>
 
@@ -59,15 +78,18 @@
             <input type="email" class="form-control" name="email">
         </div>
 
-        <!-- Lista dinâmica de serviços -->
+        <!-- Serviços -->
         <div class="mb-3">
             <label class="form-label">Serviços oferecidos</label>
 
             <div class="row">
                 {% for serv in servicos %}
                 <div class="col-4 mb-2">
-                    <input class="form-check-input" type="checkbox" name="servicos[]" value="{{ serv.id }}"
-                        id="serv{{ serv.id }}">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="servicos[]"
+                           value="{{ serv.id }}"
+                           id="serv{{ serv.id }}">
                     <label class="form-check-label" for="serv{{ serv.id }}">
                         {{ serv.nome }} — R$ {{ "%.2f"|format(serv.valor) }}
                     </label>
@@ -78,22 +100,32 @@
 
         <!-- Foto -->
         <div class="mb-3">
+
             <label class="form-label">Foto do Barbeiro</label>
-
-            <div class="d-flex gap-3 align-items-start">
-                <input type="file" class="form-control w-50" name="foto" accept="image/*" id="foto-input">
-
-                <img id="preview-img" class="border rounded"
-                    style="width:140px;height:140px;display:none;object-fit:cover;">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <input type="file"
+                        class="form-control"
+                        name="foto"
+                        accept="image/*"
+                        id="foto-input">
+                </div>
             </div>
-        </div>
+
+            <!-- Preview embaixo -->
+            <div class="row g-3">
+                <div class="col-12 text-center">
+                    <div id="preview-wrapper" class="preview-wrapper d-none">
+                        <img id="preview-img">
+                    </div>
+                    <div >  </div>
+                </div>
+            </div>
 
         <button class="btn btn-primary">Cadastrar</button>
 
     </form>
-
 </div>
-
 
 <!-- Modal de Crop -->
 <div class="modal fade" id="cropModal" tabindex="-1">
@@ -105,7 +137,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body p-0">
+            <div class="modal-body">
                 <img id="crop-image">
             </div>
 
@@ -119,43 +151,42 @@
     </div>
 </div>
 
-<!-- JS DO CROP -->
 <script>
     let cropper;
 
-    // Ao selecionar imagem
-    document.getElementById("foto-input").addEventListener("change", function (e) {
+    const modalEl   = document.getElementById("cropModal");
+    const imgCrop   = document.getElementById("crop-image");
+    const fileInput = document.getElementById("foto-input");
+    const preview   = document.getElementById("preview-img");
+
+    const modal = new bootstrap.Modal(modalEl);
+
+    // Selecionar imagem
+    fileInput.addEventListener("change", function (e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        const imgCrop = document.getElementById("crop-image");
         imgCrop.src = URL.createObjectURL(file);
-
-        // Abre modal
-        const modal = new bootstrap.Modal(document.getElementById("cropModal"));
         modal.show();
+    });
 
-        // Inicializar cropper quando imagem carregar
-        imgCrop.onload = function () {
-            if (cropper) cropper.destroy();
+    // Inicializar cropper quando modal abrir
+    modalEl.addEventListener("shown.bs.modal", function () {
 
-            cropper = new Cropper(imgCrop, {
-                aspectRatio: 3 / 4,
-                viewMode:1,
-                // dragMode: 'move',
-                autoCropArea: 1,            // 100% da área visível
-                responsive: true,
-                // restore: false,
-                // guides: false,
-                // center: true,
-                // highlight: false,
-                // background: false,          // remove xadrez
-                // movable: true,
-                // zoomable: true,
-                // scalable: false,
-                // rotatable: false,
-            });
-        };
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+
+        cropper = new Cropper(imgCrop, {
+            aspectRatio: 3 / 4,
+            viewMode: 1,
+            autoCropArea: 1,
+            responsive: true,
+            background: false,
+        });
+
+        setTimeout(() => cropper.resize(), 50);
     });
 
     // Aplicar corte
@@ -163,25 +194,20 @@
 
         const canvas = cropper.getCroppedCanvas({
             width: 400,
-            height: 400
+            height: 400,
         });
 
-        // Preview
-        const preview = document.getElementById("preview-img");
         preview.src = canvas.toDataURL("image/jpeg");
-        preview.style.display = "block";
+        document.getElementById("preview-wrapper").classList.remove("d-none");
 
-        // Substituir arquivo no input
         canvas.toBlob(function (blob) {
-            const fileInput = document.getElementById("foto-input");
             const file = new File([blob], "foto_cortada.jpg", { type: "image/jpeg" });
-
             const dt = new DataTransfer();
             dt.items.add(file);
             fileInput.files = dt.files;
         });
 
-        bootstrap.Modal.getInstance(document.getElementById("cropModal")).hide();
+        modal.hide();
     });
 </script>
 
