@@ -23,7 +23,6 @@ def connect_params(**kwargs):
     database=os.getenv("DB_PADRAO"))
 
     try:
-
         # Se ainda não existe, cria a configuração padrão
         if hasattr(g, "db_params"):
             paramts_connect.update({'database' : g.db_params})
@@ -33,6 +32,8 @@ def connect_params(**kwargs):
 
     # Atualiza apenas o que o usuário mandar
     paramts_connect.update(kwargs)
+
+    print(paramts_connect)
 
     return paramts_connect
 

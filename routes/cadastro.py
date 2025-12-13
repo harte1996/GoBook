@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from werkzeug.utils import secure_filename
 from modulos.bd import connect_execute, connect_consulta, read_table_df
 from routes.auth import admin_required
+from modulos import logger
 from datetime import datetime
 
 
@@ -39,7 +40,7 @@ def cadastrar_profissional():
         # ---- Pasta do usuário logado ----
         id_user = session.get('user_id')
         email_usuario = connect_consulta(
-            "SELECT email FROM usuarios_b WHERE id=%s",
+            "SELECT email FROM gobook.usuarios_b WHERE id=%s",
             id_user,
             dictonary=True
         )[0]['email']
@@ -59,21 +60,23 @@ def cadastrar_profissional():
         # ---- Inserir profissional ----
         try:
             sql = """
-                INSERT INTO profissional_b (nome, email, foto, criado_por)
-                VALUES (%s, %s, %s, %s)
+                INSERT INTO profissional_b (nome, email, foto, criado_por, estabelecimento_id)
+                VALUES (%s, %s, %s, %s, %s)
             """
             id_profissional = connect_execute(
                 sql,
                 nome,
                 email_profissional,
                 f"{pasta_usuario}/fotos_profissional/{foto_nome}" if foto_nome else None,
-                id_user
+                id_user,
+                session['estabelecimento_id']
             )
         except Exception as e:
             if "Duplicate entry" in str(e):
                 flash("Este e-mail já está cadastrado para outro profissional!", "danger")
             else:
                 flash("Erro ao cadastrar profissional.", "danger")
+                logger.error(e)
             return redirect(url_for('cadastro.cadastrar_profissional'))
 
         # ---- Inserir serviços selecionados ----
@@ -92,6 +95,7 @@ def cadastrar_profissional():
 
 
 @cadastro_bp.route('/listar')
+@admin_required
 def listar_profissional():
     sql = """
         SELECT b.id AS id, b.nome, b.email, b.foto,

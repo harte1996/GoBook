@@ -21,23 +21,25 @@
         .login-card {
             background: #ffffff;
             width: 100%;
-            max-width: 420px;
+            max-width:400px;
+            min-height:500px;
             padding: 35px 30px;
             border-radius: 18px;
             box-shadow: 0 5px 20px rgba(0,0,0,.1);
             animation: fadeIn 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .logo-gobook {
             width: 350px;
+            height:100px;
+            object-fit: contain;
             text-align: center;
-        }
-
-        .login-card h2 {
-            font-weight: 700;
-            color: #1f1f1f;
-            margin-bottom: 10px;
-            text-align: center;
+            margin-bottom: 40px;
+            margin: 0;
+            padding: 0;
         }
 
         .login-card p {
@@ -114,9 +116,6 @@
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="GoBookService" class="logo-gobook">
     </div>
 
-    <!-- <h2>GoBookService</h2> -->
-    <!-- <p>Acesso administrativo</p> -->
-
     <form method="POST" action="{{ url_for('auth.login') }}">
 
         <div class="mb-3">
@@ -154,26 +153,28 @@
 const passwordInput = document.getElementById("password");
 const toggleIcon = document.getElementById("toggleEye");
 
-// Mostrar senha enquanto pressiona
-toggleIcon.addEventListener("mousedown", () => {
+// Mostrar senha enquanto pressionar (para desktop e celular)
+function showPassword() {
     passwordInput.type = "text";
     toggleIcon.classList.remove("bi-eye");
     toggleIcon.classList.add("bi-eye-slash");
-});
+}
 
-// Voltar para senha quando soltar
-toggleIcon.addEventListener("mouseup", () => {
+// Voltar para senha quando soltar (para desktop e celular)
+function hidePassword() {
     passwordInput.type = "password";
     toggleIcon.classList.add("bi-eye");
     toggleIcon.classList.remove("bi-eye-slash");
-});
+}
 
-// Caso arraste para fora mantendo pressionado
-toggleIcon.addEventListener("mouseleave", () => {
-    passwordInput.type = "password";
-    toggleIcon.classList.add("bi-eye");
-    toggleIcon.classList.remove("bi-eye-slash");
-});
+// Eventos para desktop
+toggleIcon.addEventListener("mousedown", showPassword);  // Mouse pressionado
+toggleIcon.addEventListener("mouseup", hidePassword);    // Mouse liberado
+toggleIcon.addEventListener("mouseleave", hidePassword); // Mouse sai do ícone
+
+// Eventos para dispositivos móveis (touch)
+toggleIcon.addEventListener("touchstart", showPassword);  // Toque inicial
+toggleIcon.addEventListener("touchend", hidePassword);    // Toque final
 </script>
 
 </body>
