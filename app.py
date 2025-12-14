@@ -33,5 +33,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = create_app()
-    # Timer(2, open_browser, args=(args.port,)).start()
+    Timer(2, open_browser, args=(args.port,)).start()
     app.run(host='0.0.0.0', port=args.port, debug=True)

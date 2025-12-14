@@ -11,23 +11,47 @@ client_bp = Blueprint('cliente', __name__)
 @client_bp.route('/client')
 def client():
     # Exemplo: substitua pelas suas consultas reais
-    barbeiros = connect_consulta(
-        'SELECT id, nome, foto FROM barbeiros_b', dictonary=True)
+    profissional = connect_consulta(
+        'SELECT id, nome, foto FROM profissional_b', dictonary=True)
     servicos = connect_consulta(
         'SELECT id, nome, tempo, valor, foto FROM servicos_b', dictonary=True)
-    return render_template('cliente_agendar.html', barbeiros=barbeiros, servicos=servicos)
+    return render_template('cliente_agendar.html', profissional=profissional, servicos=servicos)
 
 
 @client_bp.route('/client/horarios')
 def client_horarios():
     data = request.args.get('data')
-    barbeiro_id = request.args.get('barbeiro')
+    profissional_id = request.args.get('profissional')
     servico_id = request.args.get('servico')
 
     data = datetime.strptime(data, '%Y-%m-%d')
 
     # Agenda disponivel do profissional
-    agenda = agenda_disponivel(barbeiro_id, data)
+    agenda_fixa = connect_consulta("""
+    SELECT dia_semana, hora_inicio, hora_fim
+    FROM disponibilidade_profissional
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    excecoes = connect_consulta("""
+    SELECT data, hora_inicio, hora_fim, fechado, descricao
+    FROM agenda_excecao
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    ocupados = connect_consulta("""
+    SELECT *
+    FROM agendamentos
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+
+    excecoes_recorrent = connect_consulta("""
+    SELECT  hora_inicio, hora_fim, descricao
+    FROM excecoes_recorrentes
+    WHERE profissional_id=%s
+    """, profissional_id, dictonary=True)
+    
+    agenda = agenda_disponivel(data,agenda_fixa,excecoes,ocupados,excecoes_recorrent)
 
     # Consulta o servico para definir o tempo
     service = connect_consulta('''
@@ -56,7 +80,7 @@ def client_horarios():
             # quebrar_intervalo_services(inicio, fim, tempo_service)
             time_atual = inicio
             while time_atual < fim:
-                hrs_disp.append(time_atual.time().isoformat()[:8])
+                hrs_disp.append(time_atual.time().isoformat()[:5])
                 time_atual = time_atual + timedelta(minutes=tempo_service)
 
     return render_template('partials/horarios_client.html', horarios=hrs_disp)
@@ -66,8 +90,8 @@ def client_horarios():
 def client_confirmar():
     nome = request.form['nome']
     telefone = request.form['telefone']
-    barbeiro = request.form['barbeiro_nome']
-    barbeiro_id = request.form['barbeiro']
+    profissional = request.form['profissional_nome']
+    profissional_id = request.form['profissional']
     servico = request.form['servico_nome']
     servico_id = request.form['servico']
     data = request.form['data']
@@ -89,10 +113,10 @@ def client_confirmar():
 
     agendar = connect_execute("""
     INSERT INTO agendamentos
-    (barbeiro_id, cliente_nome, telefone, data, hora_inicio, hora_fim)
+    (profissional_id, cliente_nome, telefone, data, hora_inicio, hora_fim)
     VALUES (%s, %s, %s, %s, %s, %s)
     """,
-                    barbeiro_id,
+                    profissional_id,
                     nome,
                     telefone,
                     data.date(),
@@ -109,7 +133,7 @@ def client_confirmar():
 
     📅 Data: {data.strftime('%d/%m/%Y')}
     ⏰ Horário: {hora.time().isoformat()}
-    💈 Barbeiro: {barbeiro}
+    💈 profissional: {profissional}
     ✂️ Serviço: {servico}
 
 
@@ -122,18 +146,18 @@ def client_confirmar():
     return jsonify({'redirect': link})
 
 
-@client_bp.route('/client/servicos/<int:barbeiro_id>')
-def servicos_por_barbeiro(barbeiro_id):
+@client_bp.route('/client/servicos/<int:profissional_id>')
+def servicos_por_profissional(profissional_id):
     sql = """
         SELECT 
             s.id,
             s.nome,
             s.foto,
             bs.preco
-        FROM barbeiro_servicos bs
+        FROM profissional_servicos bs
         JOIN servicos_b s ON s.id = bs.servico_id
-        WHERE bs.barbeiro_id = %s
+        WHERE bs.profissional_id = %s
     """
-    servicos = connect_consulta(sql, barbeiro_id, dictonary=True)
+    servicos = connect_consulta(sql, profissional_id, dictonary=True)
     return render_template('partials/_servicos_cards.html', servicos=servicos)
 

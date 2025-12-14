@@ -21,7 +21,7 @@
     border-color: #198754;
 }
 .img-card {
-    height: 150px;
+    height: 350px;
     object-fit: cover;
 }
 .slot {
@@ -50,12 +50,12 @@
         <input class="form-control mb-2" name="nome" placeholder="Seu nome" required>
         <input class="form-control mb-4" name="telefone" placeholder="WhatsApp" required>
 
-        <!-- ✂️ Barbeiros -->
+        <!-- ✂️ profissionals -->
         <h5>Escolha o profissional</h5>
         <div class="row mb-4">
-            {% for b in barbeiros %}
+            {% for b in profissional %}
             <div class="col-6 col-md-4 mb-3">
-                <div class="card card-select barbeiro-card" data-id="{{ b.id }}" data-nome="{{ b.nome }}">
+                <div class="card card-select profissional-card" data-id="{{ b.id }}" data-nome="{{ b.nome }}">
                     <img src="{{ url_for('static', filename='uploads/' ~ b.foto) }}" class="card-img-top img-card">
                     <div class="card-body text-center">
                         <strong>{{ b.nome }}</strong>
@@ -84,10 +84,10 @@
         <div id="horarios" class="row g-2 mb-4"></div>
 
         <!-- Hidden -->
-        <input type="hidden" name="barbeiro" id="barbeiro">
+        <input type="hidden" name="profissional" id="profissional">
         <input type="hidden" name="servico" id="servico">
         <input type="hidden" name="horario" id="horario">
-        <input type="hidden" name="barbeiro_nome" id="barbeiro_nome">
+        <input type="hidden" name="profissional_nome" id="profissional_nome">
         <input type="hidden" name="servico_nome" id="servico_nome">
 
         <button class="btn btn-success w-100">Confirmar Agendamento</button>
@@ -97,9 +97,9 @@
 
 <script>
 function carregarHorarios(){
-    if($('#barbeiro').val() && $('#servico').val() && $('#data').val()){
+    if($('#profissional').val() && $('#servico').val() && $('#data').val()){
         $.get('/client/horarios',{
-            barbeiro: $('#barbeiro').val(),
+            profissional: $('#profissional').val(),
             servico: $('#servico').val(),
             data: $('#data').val()
         }, function(res){
@@ -108,17 +108,17 @@ function carregarHorarios(){
     }
 }
 
-// 👉 Seleção do barbeiro
-$('.barbeiro-card').click(function(){
+// 👉 Seleção do profissional
+$('.profissional-card').click(function(){
 
-    $('.barbeiro-card').removeClass('active')
+    $('.profissional-card').removeClass('active')
     $(this).addClass('active')
 
-    const barbeiroId   = $(this).data('id')
-    const barbeiroNome = $(this).data('nome')
+    const profissionalId   = $(this).data('id')
+    const profissionalNome = $(this).data('nome')
 
-    $('#barbeiro').val(barbeiroId)
-    $('#barbeiro_nome').val(barbeiroNome)
+    $('#profissional').val(profissionalId)
+    $('#profissional_nome').val(profissionalNome)
 
     // Reset
     $('#servico').val('')
@@ -127,8 +127,8 @@ $('.barbeiro-card').click(function(){
     $('#servicos-area').html('')
     $('#servicos-loading').show()
 
-    // Buscar serviços do barbeiro
-    $.get(`/client/servicos/${barbeiroId}`, function(res){
+    // Buscar serviços do profissional
+    $.get(`/client/servicos/${profissionalId}`, function(res){
         $('#servicos-loading').hide()
         $('#servicos-area').html(res)
     })

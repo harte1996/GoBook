@@ -4,18 +4,36 @@ from werkzeug.security import generate_password_hash
 from datetime import datetime
 
 
+print(listar_table())
+print(read_table_df('disponibilidade_profissional'))
+# exit()
+# delete_table('usuarios_b')
+# delete_table('estabelecimentos_b')
+# delete_table('agenda_excecao')
+# delete_table('configuracao_agenda')
+delete_table('disponibilidade_profissional')
+# delete_table('estabelecimentos_b')
+# delete_table('excecores_recorrentes')
+# delete_table('profissional_b')
+# delete_table('profissional_servicos')
+# delete_table('servicos_b')
+
+# print(read_table_df('usuarios_b'))
+# table_geral()
+# print(listar_table())
+
 # delete_table('usuarios_b')
 # delete_table('estabelecimentos_b')
 
 # delete_table()
 
-sql = """UPDATE usuarios_b
-         SET username = 'inventario'
-         WHERE cpf = 43388362882"""
+# sql = """UPDATE usuarios_b
+#          SET username = 'inventario'
+#          WHERE cpf = 43388362882"""
 
-connect_execute(sql)
+# connect_execute(sql)
 
-print(read_table_df('usuarios_b'))
+# print(read_table_df('usuarios_b'))
 
 # # Cadastro Estabelecimento
 # nome = 'salao dos milagres'
@@ -42,19 +60,20 @@ print(read_table_df('usuarios_b'))
 # data_cadastrado = datetime.now()
 # ativo = True
 # try_test = False
-# estab_id = estab
+# estab_id = 1
 
 # sql = '''INSERT INTO usuarios_b (nome, username, email, cpf, senha, role, telefone, data_cadastro, estabelecimento_id, ativo, try_test)
 #          VALUES ( %s, %s, %s, %s, %s,%s, %s, %s, %s, %s,%s);
 #     '''
 # connect_execute(sql, nome, username, email, cpf, senha,
-#                 role, telefone, data_cadastrado, estab_id, ativo)
+#                 role, telefone, data_cadastrado, estab_id, ativo,try_test)
 
 
+# print(read_table_df('usuarios_b'))
 # creat_database(username.lower())
 # print(listar_database())
 # connect_params(database=username)
-# table_user()
+table_user()
 
 # print(listar_table())
 # print(listar_database())

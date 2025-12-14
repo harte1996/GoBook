@@ -107,7 +107,7 @@ def table_user():
         CREATE TABLE IF NOT EXISTS disponibilidade_profissional (
             id INT AUTO_INCREMENT PRIMARY KEY,
             profissional_id INT NOT NULL,
-            dia_semana TINYINT NOT NULL CHECK (dia_semana BETWEEN 1 AND 7), -- 1=Segunda ... 7=Domingo
+            dia_semana TINYINT NOT NULL CHECK (dia_semana BETWEEN 0 AND 6), -- 0=Segunda ... 6=Domingo
             hora_inicio TIME NOT NULL,
             hora_fim TIME NOT NULL,
             UNIQUE (profissional_id, dia_semana),
@@ -138,7 +138,7 @@ def table_user():
             hora_fim TIME NOT NULL,
 
             FOREIGN KEY (profissional_id) REFERENCES profissional_b(id) ON DELETE CASCADE,
-            FOREIGN KEY (servico_id) REFERENCES servicos_b(id) ON DELETE RESTRICT,
+            FOREIGN KEY (servico_id) REFERENCES servicos_b(id) ON DELETE RESTRICT
         );'''
     connect_execute(sql_agendamentos)
 

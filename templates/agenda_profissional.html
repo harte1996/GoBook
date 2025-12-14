@@ -2,21 +2,22 @@
 {% block title %}Agenda do Profissional{% endblock %}
 {% block content %}
 
-
 <div class="container-fluid py-4">
 
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-        <h2 class="mb-0">
+        <h2 class="mb-0 text-dark">
             <i class="bi bi-calendar-check me-2"></i>Gerenciar Agenda
         </h2>
 
         <div class="d-flex align-items-center bg-white p-2 rounded shadow-sm border">
             <label class="fw-bold me-2 mb-0">Profissional:</label>
-            <select class="form-select form-select-sm border-0" id="profissionalSelect" onchange="trocarProfissional()"
-                style="min-width:200px">
-                {% for b in Profissional %}
-                <option value="{{ b.id }}">{{ b.nome }}</option>
+            <select class="form-select form-select-sm border-0"
+                    id="profissionalSelect"
+                    onchange="trocarProfissional()"
+                    style="min-width:200px">
+                {% for b in profissional %}
+                    <option value="{{ b.id }}">{{ b.nome }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -29,23 +30,23 @@
 
             <div class="card shadow-sm border-0">
 
-                <!-- HEADER CLICÁVEL -->
-                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center"
-                    role="button" data-bs-toggle="collapse" data-bs-target="#configAgenda">
+                <!-- HEADER COLAPSÁVEL -->
+                <div class="card-header gobook-card-header d-flex justify-content-between align-items-center"
+                     role="button"
+                     data-bs-toggle="collapse"
+                     data-bs-target="#configAgenda"
+                     aria-expanded="true">
 
-                    <strong>
-                        <i class="bi bi-gear-fill me-2"></i>Padrão Semanal
-                    </strong>
-                    <h1 class="text"> ➕  </h1>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-gear-fill"></i>
+                        <strong>Padrão Semanal</strong>
+                    </div>
 
-
-
-                    <i class="bi bi-chevron-down d-lg-none"></i>
+                    <i class="bi bi-chevron-down collapse-icon"></i>
                 </div>
 
                 <!-- COLLAPSE -->
-                <div id="configAgenda" class="collapse d-lg-block">
-
+                <div id="configAgenda" class="collapse show d-lg-block">
                     <div class="card-body">
 
                         <form id="formAgenda">
@@ -55,44 +56,56 @@
                                 {% set dias_label = ['D','S','T','Q','Q','S','S'] %}
                                 {% set dias_value = [6,0,1,2,3,4,5] %}
                                 {% for i in range(7) %}
-                                <input type="checkbox" class="btn-check" id="dia{{ i }}" value="{{ dias_value[i] }}"
-                                    name="dias">
-                                <label for="dia{{ i }}" class="btn btn-outline-primary btn-sm rounded-circle"
-                                    style="width:36px;height:36px;">
-                                    {{ dias_label[i] }}
-                                </label>
+                                    <input type="checkbox"
+                                           class="btn-check"
+                                           id="dia{{ i }}"
+                                           value="{{ dias_value[i] }}"
+                                           name="dias">
+                                    <label for="dia{{ i }}"
+                                           class="btn btn-outline-primary btn-sm rounded-circle"
+                                           style="width:36px;height:36px;">
+                                        {{ dias_label[i] }}
+                                    </label>
                                 {% endfor %}
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-6">
+                            <div class="row mb-3 g-2">
+                                <div class="col-12 col-xl-6">
                                     <label class="small fw-bold">Início</label>
                                     <input type="time" class="form-control" name="hora_inicio" required>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-xl-6">
                                     <label class="small fw-bold">Fim</label>
                                     <input type="time" class="form-control" name="hora_fim" required>
                                 </div>
                             </div>
 
                             <label class="small fw-bold">Agenda aberta (dias)</label>
-                            <input type="number" class="form-control mb-3" name="dias_aberta" value="30">
+                            <input type="number"
+                                   class="form-control mb-3"
+                                   name="dias_aberta"
+                                   value="30">
 
-                            <button type="button" class="btn btn-outline-secondary btn-sm w-100 mb-2"
-                                onclick="toggleExcecoes()">
-                                + Exceções recorrentes
+                            <button type="button"
+                                    class="btn btn-outline-secondary btn-sm w-100 mb-2"
+                                    onclick="toggleExcecoes()">
+                                <i class="bi bi-plus-circle me-1"></i>Exceções recorrentes
                             </button>
 
                             <div id="excecoesContainer" class="d-none">
                                 <div id="listaExcecoes"></div>
-                                <button type="button" class="btn btn-outline-primary btn-sm w-100"
-                                    onclick="adicionarExcecao()">
-                                    + Nova exceção
+
+                                <button type="button"
+                                        class="btn btn-outline-primary btn-sm w-100"
+                                        onclick="adicionarExcecao()">
+                                    <i class="bi bi-plus"></i> Nova exceção
                                 </button>
                             </div>
 
-                            <button type="button" class="btn btn-dark w-100 mt-3" onclick="salvarAgenda()">
-                                Salvar Padrão
+                            <button type="button"
+                                    class="btn btn-dark w-100 mt-3"
+                                    onclick="salvarAgenda()">
+                                <i class="bi bi-save me-1"></i>Salvar Padrão
                             </button>
 
                         </form>
@@ -109,6 +122,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -117,9 +131,11 @@
     <div class="modal-dialog modal-dialog-centered modal-sm modal-md">
         <div class="modal-content">
 
-            <div class="modal-header bg-warning-subtle">
+            <div class="modal-header" style="background: var(--gobook-primary); color:#fff;">
                 <h5 class="modal-title">Editar Exceção</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
@@ -130,8 +146,10 @@
                 <input type="hidden" id="dataExcecaoValue">
 
                 <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" id="checkFechado"
-                        onchange="toggleHorariosExcecao()">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="checkFechado"
+                           onchange="toggleHorariosExcecao()">
                     <label class="form-check-label fw-bold">
                         Dia Fechado
                     </label>
@@ -148,15 +166,20 @@
 
                 <div class="mt-3">
                     <label class="fw-bold mb-2">Descrição</label>
-                    <input type="text" class="form-control" id="descricao" placeholder="Ex: Manutenção, Evento, etc.">
+                    <input type="text"
+                           class="form-control"
+                           id="descricao"
+                           placeholder="Ex: Manutenção, Evento">
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-danger me-auto" onclick="removerExcecao()">
+                <button class="btn btn-danger me-auto"
+                        onclick="removerExcecao()">
                     Restaurar Padrão
                 </button>
-                <button class="btn btn-primary" onclick="salvarExcecao()">
+                <button class="btn btn-primary"
+                        onclick="salvarExcecao()">
                     Salvar Exceção
                 </button>
             </div>
@@ -165,6 +188,70 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+
+<style>
+/* ===== IDENTIDADE GOBOOK ===== */
+:root {
+    --gobook-primary: #0F224D;
+    --gobook-hover: #1A376E;
+}
+
+/* Card header colapsável */
+.gobook-card-header {
+    background: var(--gobook-primary);
+    color: #fff;
+    cursor: pointer;
+}
+
+.gobook-card-header:hover {
+    background: var(--gobook-hover);
+}
+
+.collapse-icon {
+    transition: transform .3s ease;
+}
+
+[aria-expanded="true"] .collapse-icon {
+    transform: rotate(180deg);
+}
+
+/* FullCalendar */
+.fc .fc-toolbar-title {
+    color: var(--gobook-primary);
+    font-weight: 600;
+}
+
+.fc .fc-button {
+    background: var(--gobook-primary);
+    border: none;
+}
+
+.fc .fc-button:hover,
+.fc .fc-button.fc-button-active {
+    background: var(--gobook-hover);
+}
+
+.fc-event {
+    background: var(--gobook-primary);
+    border: none;
+}
+
+.fc-day-today {
+    background: rgba(15, 34, 77, 0.08) !important;
+}
+
+.fc-now-indicator {
+    border-color: var(--gobook-hover);
+}
+
+@media (max-width: 768px) {
+    .fc {
+        font-size: 14px;
+    }
+}
+</style>
+
+
 
 <script>
     let calendar;
@@ -404,30 +491,5 @@
             });
     }
 </script>
-
-<style>
-    .fc-event-title {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    @media (max-width: 768px) {
-
-        .fc {
-            font-size: 14px;
-        }
-
-        .fc-toolbar-title {
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .fc-button {
-            padding: 6px 10px;
-            font-size: 12px;
-        }
-    }
-</style>
 
 {% endblock %}

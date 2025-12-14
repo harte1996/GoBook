@@ -154,7 +154,7 @@ def agenda_disponivel(date, agenda_fixa, excecoes, ocupados, excecoes_recorrent)
 @admin_required
 def agenda_profissional():
     profissional = connect_consulta(
-        "SELECT id, nome FROM profissional_b ORDER BY nome", dictonary=True
+        "SELECT id, nome FROM gobook.profissional_b ORDER BY nome", dictonary=True
     )
     return render_template(
         'agenda_profissional.html',
@@ -170,7 +170,7 @@ def agenda_profissional():
 @agenda_bp.route('/salvar-disponibilidade', methods=['POST'])
 @admin_required
 def salvar_disponibilidade():
-
+    print('entrei')
     data = request.get_json()
 
     profissional_id = data['profissional_id']
@@ -188,11 +188,16 @@ def salvar_disponibilidade():
 
     # ✅ Salva nova disponibilidade
     for dia in dias:
+        print(profissional_id)
+        print(int(dia))
+        print(hora_inicio)
+        print(hora_fim)
         connect_execute("""
             INSERT INTO disponibilidade_profissional
             (profissional_id, dia_semana, hora_inicio, hora_fim)
             VALUES (%s, %s, %s, %s)
         """, profissional_id, int(dia), hora_inicio, hora_fim)
+        
 
     # ✅ Configuração geral
     connect_execute("""
@@ -267,7 +272,12 @@ def eventos_agenda():
     SELECT dias_aberta
     FROM configuracao_agenda
     WHERE profissional_id=%s
-    """, profissional_id, dictonary=True)[0]
+    """, profissional_id, dictonary=True)
+
+    print(config)
+
+    config = config[0] if len(config) > 0 else []
+    print(config)
 
     agenda_fixa = connect_consulta("""
     SELECT dia_semana, hora_inicio, hora_fim
@@ -292,8 +302,8 @@ def eventos_agenda():
     FROM excecoes_recorrentes
     WHERE profissional_id=%s
     """, profissional_id, dictonary=True)
-
-    dias_aberta = int(config['dias_aberta'])
+    
+    dias_aberta = int(config['dias_aberta']) if len(config) > 0 else 0
 
     # =========================
     # LOOP PRINCIPAL
