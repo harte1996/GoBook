@@ -206,8 +206,15 @@ def editar_profissional(id):
 def excluir_profissional(id):
 
     # Verificar se tem agendamentos ativos (se você tiver tabela)
-    ag = read_table_df("agendamentos").loc[ag['data'] > datetime.now()]
-    if not ag.empty and id in ag["profissional_id"].values:
+    ag = connect_consulta("""
+    SELECT *
+    FROM agendamentos
+    WHERE profissional_id=%s , data => %s
+    """, id,datetime.now().date(), dictonary=True)
+
+    ag = [] if ag == None else ag
+
+    if not len(ag) == 0:
         flash("Este profissional possui agendamentos e não pode ser excluído.", "danger")
         return redirect(url_for("cadastro.listar_profissional"))
 

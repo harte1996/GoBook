@@ -140,7 +140,6 @@ def atualizar_table(df, table, if_exists='append', edit='yes'):
 
 def listar_table():
     table_list = []
-    connect_params()
     with new_connect() as conexao:
         try:
             cursor = conexao.cursor()

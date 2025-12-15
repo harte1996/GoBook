@@ -188,10 +188,6 @@ def salvar_disponibilidade():
 
     # ✅ Salva nova disponibilidade
     for dia in dias:
-        print(profissional_id)
-        print(int(dia))
-        print(hora_inicio)
-        print(hora_fim)
         connect_execute("""
             INSERT INTO disponibilidade_profissional
             (profissional_id, dia_semana, hora_inicio, hora_fim)
@@ -274,10 +270,7 @@ def eventos_agenda():
     WHERE profissional_id=%s
     """, profissional_id, dictonary=True)
 
-    print(config)
-
     config = config[0] if len(config) > 0 else []
-    print(config)
 
     agenda_fixa = connect_consulta("""
     SELECT dia_semana, hora_inicio, hora_fim
