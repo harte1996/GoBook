@@ -99,7 +99,7 @@ def client_confirmar():
 
     # Transformar em datatime
     data = datetime.strptime(data, '%Y-%m-%d')
-    hora = datetime.strptime(hora, '%H:%M:%S')
+    hora = datetime.strptime(hora, '%H:%M')
 
     # Consulta o servico para definir o tempo
     service = connect_consulta('''
@@ -113,8 +113,8 @@ def client_confirmar():
 
     agendar = connect_execute("""
     INSERT INTO agendamentos
-    (profissional_id, cliente_nome, telefone, data, hora_inicio, hora_fim)
-    VALUES (%s, %s, %s, %s, %s, %s)
+    (profissional_id, cliente_nome, telefone, data, hora_inicio, hora_fim,servico_id)
+    VALUES (%s, %s, %s, %s, %s, %s,%s)
     """,
                     profissional_id,
                     nome,
@@ -122,6 +122,7 @@ def client_confirmar():
                     data.date(),
                     hora,
                     hora_fim,
+                    servico_id
                     )
 
     if not agendar:

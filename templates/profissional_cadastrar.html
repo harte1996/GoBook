@@ -1,6 +1,6 @@
 {% extends "base_admin.html" %}
 
-{% block title %}Cadastrar Barbeiro{% endblock %}
+{% block title %}Cadastrar Profissional{% endblock %}
 
 {% block content %}
 
@@ -63,13 +63,13 @@
 
 <div class="container mt-4">
 
-    <h2>Cadastrar Barbeiro</h2>
+    <h2>Cadastrar Profissional</h2>
     <hr>
 
     <form method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
-            <label class="form-label">Nome do Barbeiro</label>
+            <label class="form-label">Nome do Profissional</label>
             <input type="text" class="form-control" name="nome" required>
         </div>
 
@@ -77,6 +77,12 @@
             <label class="form-label">E-mail</label>
             <input type="email" class="form-control" name="email">
         </div>
+
+        <div class="mb-3">
+            <label class="form-label">Telefone</label>
+            <input type="text" class="form-control" name="telefone">
+        </div>
+
 
         <!-- Serviços -->
         <div class="mb-3">
@@ -101,7 +107,7 @@
         <!-- Foto -->
         <div class="mb-3">
 
-            <label class="form-label">Foto do Barbeiro</label>
+            <label class="form-label">Foto do Profissional</label>
             <div class="row g-3 align-items-center">
                 <div class="col-md-6">
                     <input type="file"

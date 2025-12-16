@@ -28,6 +28,7 @@ def cadastrar_profissional():
     if request.method == 'POST':
 
         nome = request.form.get('nome')
+        telefone = request.form.get('telefone')
         email_profissional = request.form.get('email')
         servicos_selecionados = request.form.getlist('servicos[]') or []
         foto = request.files.get('foto')
@@ -60,8 +61,8 @@ def cadastrar_profissional():
         # ---- Inserir profissional ----
         try:
             sql = """
-                INSERT INTO profissional_b (nome, email, foto, criado_por, estabelecimento_id)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO profissional_b (nome, email, foto, criado_por, estabelecimento_id,telefone)
+                VALUES (%s, %s, %s, %s, %s,%s)
             """
             id_profissional = connect_execute(
                 sql,
@@ -69,7 +70,8 @@ def cadastrar_profissional():
                 email_profissional,
                 f"{pasta_usuario}/fotos_profissional/{foto_nome}" if foto_nome else None,
                 id_user,
-                session['estabelecimento_id']
+                session['estabelecimento_id'],
+                telefone
             )
         except Exception as e:
             if "Duplicate entry" in str(e):
@@ -163,6 +165,7 @@ def editar_profissional(id):
 
     if request.method == "POST":
         nome = request.form["nome"]
+        telefone = request.form["telefone"]
         email = request.form["email"]
         servicos_selecionados = request.form.getlist("servicos[]")
 
@@ -175,8 +178,8 @@ def editar_profissional(id):
 
         # Atualizar profissional
         connect_execute("""
-            UPDATE profissional_b SET nome=%s, email=%s, foto=%s WHERE id=%s
-        """, nome, email, nome_foto, id)
+            UPDATE profissional_b SET nome=%s, email=%s, foto=%s ,telefone=%s WHERE id=%s
+        """, nome, email, nome_foto,telefone, id)
 
         # Atualizar serviços vinculados
         connect_execute(
