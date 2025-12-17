@@ -2,6 +2,7 @@ import os
 import uuid
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 from modulos.bd import connect_execute, connect_consulta, read_table_df
 from routes.auth import admin_required
 from modulos import logger
@@ -16,6 +17,7 @@ UPLOAD_FOLDER = 'static/uploads'
 def sanitizar_email(email: str):
     return email.replace("@", "_").replace(".", "_")
 
+# Cadastro Profissional
 
 @cadastro_bp.route('/cadastrar_profissional', methods=['GET', 'POST'])
 @admin_required
@@ -254,3 +256,102 @@ def alterar_preco():
     connect_execute(sql, preco, profissional, servico)
 
     return jsonify({"status": "ok"})
+
+
+# Cadastro Usuario Geral
+
+@admin_required
+@cadastro_bp.route("/minha-conta", methods=["GET", "POST"])
+def minha_conta():
+
+    id_user = session.get("user_id")
+
+    if request.method == "POST":
+        nome = request.form["nome"]
+        username = request.form["username"]
+        telefone = request.form["telefone"]
+
+        senha_atual = request.form.get("senha_atual")
+        nova_senha = request.form.get("nova_senha")
+        confirmar_senha = request.form.get("confirmar_senha")
+
+        # 🔍 Busca senha atual no banco
+        sql_senha = "SELECT senha FROM usuarios_b WHERE id = %s"
+        senha_bd = connect_consulta(sql_senha, id_user)[0]["senha"]
+
+        # 🔐 Validação de troca de senha
+        if nova_senha or confirmar_senha:
+            if not senha_atual:
+                flash("Informe a senha atual para alterar a senha.", "warning")
+                return redirect(url_for("cadastro.minha_conta"))
+
+            if not check_password_hash(senha_bd, senha_atual):
+                flash("Senha atual incorreta.", "danger")
+                return redirect(url_for("cadastro.minha_conta"))
+
+            if nova_senha != confirmar_senha:
+                flash("A nova senha e a confirmação não conferem.", "danger")
+                return redirect(url_for("cadastro.minha_conta"))
+
+            senha_hash = generate_password_hash(nova_senha)
+
+            sql_update = """
+                UPDATE usuarios_b
+                SET nome=%s, username=%s, telefone=%s, senha=%s
+                WHERE id=%s
+            """
+            connect_execute(sql_update, nome, username, telefone, senha_hash, id_user)
+
+        else:
+            sql_update = """
+                UPDATE usuarios_b
+                SET nome=%s, username=%s, telefone=%s
+                WHERE id=%s
+            """
+            connect_execute(sql_update, nome, username, telefone, id_user)
+
+        flash("Dados atualizados com sucesso!", "success")
+        return redirect(url_for("cadastro.minha_conta"))
+
+    # 🔎 Dados do usuário + estabelecimento
+    sql = """
+        SELECT 
+            u.nome,
+            u.username,
+            u.email,
+            u.cpf,
+            u.telefone,
+            u.role,
+            u.slug,
+            u.data_cadastro,
+            e.nome AS estabelecimento_nome,
+            e.telefone AS estabelecimento_telefone
+        FROM usuarios_b u
+        LEFT JOIN estabelecimentos_b e ON e.id = u.estabelecimento_id
+        WHERE u.id = %s
+    """
+
+    usuario = connect_consulta(sql, id_user, dictonary=True)[0]
+
+    return render_template("minha_conta.html", usuario=usuario)
+
+
+@cadastro_bp.route("/validar-username", methods=["POST"])
+def validar_username():
+    username = request.json.get("username")
+    id_user = session.get("user_id")
+
+    if not username:
+        return {"disponivel": False}
+
+    sql = """
+        SELECT id 
+        FROM usuarios_b 
+        WHERE username = %s AND id != %s
+        LIMIT 1
+    """
+    existe = connect_consulta(sql, username, id_user)
+
+    return {
+        "disponivel": not bool(existe)
+    }

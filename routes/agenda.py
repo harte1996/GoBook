@@ -16,14 +16,16 @@ def quebrar_intervalo(dt_inicio, dt_fim, bloqueios, tipo):
     """
     slots = []
     atual = dt_inicio
-
+    
     for b in bloqueios:
         b_ini = datetime.combine(b['data'], time()) + b['hora_inicio']
         b_fim = datetime.combine(b['data'], time()) + b['hora_fim']
 
+        # Eliminar eventos que não iniciaram no intervalo ou que já terminaram
         if b_fim <= atual or b_ini >= dt_fim:
             continue
 
+        
         if atual < b_ini:
             slots.append((atual, b_ini, 'normal', 'livre'))
 
@@ -107,6 +109,7 @@ def agenda_disponivel(date, agenda_fixa, excecoes, ocupados, excecoes_recorrent)
         # -------------------------
         excs = [e for e in excecoes if e['data'] ==
                 date.date() and not e['fechado']]
+        excs.sort(key=lambda excecoes: (excecoes['data'],excecoes['hora_inicio']))
 
         novos = []
         for ini, fim, tipo, descricao in slots:
@@ -122,7 +125,8 @@ def agenda_disponivel(date, agenda_fixa, excecoes, ocupados, excecoes_recorrent)
     # -------------------------
     ocps = [o for o in ocupados if o['data'].date() ==
             date.date()] if ocupados else []
-
+    ocps.sort(key=lambda agendamento: (agendamento['data'], agendamento['hora_inicio']))
+    
     novos = []
     for ini, fim, tipo, descricao in slots:
         if tipo != 'normal':
@@ -131,6 +135,7 @@ def agenda_disponivel(date, agenda_fixa, excecoes, ocupados, excecoes_recorrent)
             novos.extend(quebrar_intervalo(ini, fim, ocps, 'ocupado'))
 
     slots = novos
+    print(slots)
 
     # -------------------------
     # SALVAR

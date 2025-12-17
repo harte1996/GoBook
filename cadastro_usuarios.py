@@ -3,6 +3,11 @@ from modulos.tables import table_geral, table_user
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 
+
+sql = '''ALTER TABLE usuarios_b
+         ADD COLUMN slug VARCHAR(20)'''
+
+sql = connect_execute(sql)
 print(read_table_df('agendamentos'))
 
 # print(listar_table())
