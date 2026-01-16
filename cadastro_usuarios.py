@@ -4,8 +4,10 @@ from werkzeug.security import generate_password_hash
 from datetime import datetime
 
 
-sql = '''ALTER TABLE usuarios_b
-         ADD COLUMN slug VARCHAR(20)'''
+sql = '''UPDATE gobook.usuarios_b
+         SET slug = 'guilhermetheo'
+         WHERE cpf = 43388362882
+         '''
 
 sql = connect_execute(sql)
 print(read_table_df('agendamentos'))

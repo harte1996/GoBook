@@ -8,6 +8,29 @@ from datetime import datetime, timedelta
 client_bp = Blueprint('cliente', __name__)
 
 
+@client_bp.route('/cliente/<slug>')
+def client_slug(slug):
+    username = connect_consulta(
+        'SELECT username FROM usuarios_b WHERE slug = %s', slug ,dictonary=True
+    )
+    if username:
+        username = username[0]['username']
+    else:
+        flash('Não encontrado estabelecimento', category='error')
+        return render_template('error.html')
+    
+    profissional = connect_consulta(
+        f'SELECT id, nome, foto FROM {username}.profissional_b', dictonary=True)
+    profissional = [] if profissional is None else profissional
+
+    servicos = connect_consulta(
+        f'SELECT id, nome, tempo, valor, foto FROM {username}.servicos_b', dictonary=True)
+    servicos = [] if servicos is None else servicos
+    return render_template('cliente_agendar.html', profissional=profissional, servicos=servicos)
+
+
+
+
 @client_bp.route('/client')
 def client():
     # Exemplo: substitua pelas suas consultas reais

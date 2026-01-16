@@ -276,7 +276,7 @@ def minha_conta():
         confirmar_senha = request.form.get("confirmar_senha")
 
         # 🔍 Busca senha atual no banco
-        sql_senha = "SELECT senha FROM usuarios_b WHERE id = %s"
+        sql_senha = "SELECT senha FROM gobook.usuarios_b WHERE id = %s"
         senha_bd = connect_consulta(sql_senha, id_user)[0]["senha"]
 
         # 🔐 Validação de troca de senha
@@ -296,7 +296,7 @@ def minha_conta():
             senha_hash = generate_password_hash(nova_senha)
 
             sql_update = """
-                UPDATE usuarios_b
+                UPDATE gobook.usuarios_b
                 SET nome=%s, username=%s, telefone=%s, senha=%s
                 WHERE id=%s
             """
@@ -304,7 +304,7 @@ def minha_conta():
 
         else:
             sql_update = """
-                UPDATE usuarios_b
+                UPDATE gobook.usuarios_b
                 SET nome=%s, username=%s, telefone=%s
                 WHERE id=%s
             """
@@ -326,7 +326,7 @@ def minha_conta():
             u.data_cadastro,
             e.nome AS estabelecimento_nome,
             e.telefone AS estabelecimento_telefone
-        FROM usuarios_b u
+        FROM gobook.usuarios_b u
         LEFT JOIN estabelecimentos_b e ON e.id = u.estabelecimento_id
         WHERE u.id = %s
     """

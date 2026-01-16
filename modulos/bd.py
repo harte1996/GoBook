@@ -33,8 +33,6 @@ def connect_params(**kwargs):
     # Atualiza apenas o que o usuário mandar
     paramts_connect.update(kwargs)
 
-    print(paramts_connect)
-
     return paramts_connect
 
 
@@ -83,7 +81,7 @@ def connect_consulta(command, *args, dictonary=False,):
             cursor.execute(command, args)
             return cursor.fetchall()
         except ProgrammingError as e:
-            print(f'Erro: {e.msg}')
+            logger.error(e.msg)
 
 
 def delete_table(table):
@@ -149,7 +147,7 @@ def listar_table():
             return table_list
 
         except ProgrammingError as e:
-            print(f'erro: {e.msg}')
+            logger.error(e.msg)
 
 
 def listar_database():
@@ -163,7 +161,7 @@ def listar_database():
             return database_list
 
         except ProgrammingError as e:
-            print(f'erro: {e.msg}')
+            logger.error(e.msg)
 
 
 def creat_database(name):
